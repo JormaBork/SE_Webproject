@@ -22,8 +22,29 @@
 </style>
 
 
+
+
+
 <body>
-<h1>My First CSS Example</h1>
+<div id="demo">
+    <h1>Vong</h1>
+    <button type="button" onclick="loadDoc()">Change klik</button>
+</div>
+
+<script>
+    function loadDoc() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("demo").innerHTML =
+                    this.responseText;
+            }
+        };
+        xhttp.open("GET", "vong.txt", true);
+        xhttp.send();
+    }
+</script>
+
 <p>Vong Ide her gut.</p>
 <button type="button" onclick="alert('Halo I bims Lolo')">kliek hir</button>
 </body>
