@@ -1,13 +1,6 @@
 # ************************************************************
-# Sequel Pro SQL dump
-# Version 4096
-#
-# http://www.sequelpro.com/
-# http://code.google.com/p/sequel-pro/
-#
 # Host: localhost (MySQL 5.5.42)
-# Database: auth
-# Generation Time: 2015-06-10 01:08:31 +0000
+# Database: database
 # ************************************************************
 
 
@@ -37,8 +30,7 @@ LOCK TABLES `users` WRITE;
 
 INSERT INTO `users` (`id`, `email`, `password`)
 VALUES
-	(1,'admin@admin.com','$2y$10$tiMS2takQBQwSGwaDxSGNO2RiitS/GhvWjKpJA/JKIMDeLr2z7SLm'),
-	(2,'email123@email.com','$2y$10$9OOFy5W.Vz0VapyS5U.ZqujRiXnklh48Nhc3qGfdSKxLbXRH3i87m');
+	(1,'admin@admin.de','$2y$10$tiMS2takQBQwSGwaDxSGNO2RiitS/GhvWjKpJA/JKIMDeLr2z7SLm');
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
