@@ -125,7 +125,7 @@ if( isset($_SESSION['user_id']) ){
     }
 
     function drawMessage(canvas, ctx, position, message) {
-      var fontSize = 30;
+      var fontSize = 50;
       var padding = 10;
       var verticalPosition = function() {
         if (position === 'top') {
@@ -139,7 +139,7 @@ if( isset($_SESSION['user_id']) ){
       ctx.fillStyle = 'white';
       ctx.fillText(message, canvas.width / 2, verticalPosition());
       ctx.strokeStyle = 'black';
-      ctx.lineWidth = fontSize/10;
+      ctx.lineWidth = fontSize/14;
       ctx.strokeText(message, canvas.width / 2, verticalPosition());
     }
 
