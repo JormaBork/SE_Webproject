@@ -34,6 +34,10 @@ endif;
 <html>
 <head>
 	<title>Login unten!</title>
+
+	<!-- Bootstrap Core CSS -->
+        <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 	<link href='http://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet' type='text/css'>
 </head>
@@ -52,8 +56,8 @@ endif;
 
 	<form action="login.php" method="POST">
 		
-		<input type="text" placeholder="Gib deine E-Mail " name="email">
-		<input type="password" placeholder="und dein Passwort ein" name="password">
+		<input type="text" placeholder="Login-Mailadresse" name="email">
+		<input type="password" placeholder="Passwort" name="password">
 
 		<input type="submit">
 
