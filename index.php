@@ -25,7 +25,7 @@ if( isset($_SESSION['user_id']) ){
 <html>
 <head>
 	<title>ULTIMATE VONG APP</title>
-	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+	<link rel="stylesheet" type="text/css" href="assets/style.css">
 	<link href='http://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet' type='text/css'>
 </head>
 <body>
