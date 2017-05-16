@@ -25,11 +25,11 @@ if( isset($_SESSION['user_id']) ){
 <html>
 <head>
 	<title>ULTIMATE VONG APP</title>
-	<!-- Bootstrap Core CSS -->
-     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
+     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 	<link href='http://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet' type='text/css'>
+
 </head>
 <body>
 
