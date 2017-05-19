@@ -28,7 +28,8 @@ if( isset($_SESSION['user_id']) ){
 <head>
   <title>ULTIMATE VONG Meme Generator</title>
 
-  
+  	<!-- Bootstrap Core CSS -->
+        <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
