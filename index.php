@@ -1,279 +1,223 @@
+<?php
+session_start();
+require_once 'database.php';
+
+if (isset($_SESSION['userSession'])!="") {
+	header("Location: meme.php");
+	exit;
+}
+
+if (isset($_POST['btn-login'])) {
+
+	$email = strip_tags($_POST['email']);
+	$password = strip_tags($_POST['password']);
+
+	$email = $DBcon->real_escape_string($email);
+	$password = $DBcon->real_escape_string($password);
+
+	$query = $DBcon->query("SELECT id, email, password FROM users WHERE email='$email'");
+	$row=$query->fetch_array();
+
+	$count = $query->num_rows; // if email/password are correct returns must be 1 row
+
+	if (password_verify($password, $row['password']) && $count==1) {
+		$_SESSION['userSession'] = $row['id'];
+		header("Location: meme.php");
+	} else {
+		$msg = "<div class='alert alert-danger'>
+					<span class='glyphicon glyphicon-info-sign'></span> &nbsp; Invalid Username or Password !
+				</div>";
+	}
+	$DBcon->close();
+}
+
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+	<html lang="en">
 
-<head>
+	<head>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+	    <meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	    <meta name="description" content="">
+	    <meta name="author" content="">
 
-    <title>Meme Generator</title>
+	    <title>ULTIMATE VONG MEMES</title>
 
-    <!-- Bootstrap Core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	    <!-- Bootstrap core CSS -->
+	    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom Fonts -->
-    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+			<!-- Custom fonts for this template -->
+		 	<link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+		 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+		 	<link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
 
-    <!-- Plugin CSS -->
-    <link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
+		  <!-- Plugin CSS -->
+		 	<link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
 
-    <!-- Theme CSS -->
-    <link href="css/creative.min.css" rel="stylesheet">
+			<!-- Custom styles for this template -->
+			<link href="css/creative.min.css" rel="stylesheet">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 
 </head>
 
-<body id="page-top">
+<body>
+	<body id="page-top">
 
-    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle colqan> Menu <i class="fa fa-bars"></i>
-                </button>
-                <a class="navbar-brand page-scroll" href="#page-top">Start Bootstrap</a>
-            </div>
+	    <!-- Navigation -->
+	    <nav class="navbar fixed-top navbar-toggleable-md navbar-light navbar-inverse bg-inverse" id="mainNav">
+	        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarExample" aria-controls="navbarExample" aria-expanded="false" aria-label="Toggle navigation">
+	            <span class="navbar-toggler-icon"></span>
+	        </button>
+	        <div class="container">
+	            <a class="navbar-brand" href="#page-top">ULTIMATE VONG MEMES</a>
+	            <div class="collapse navbar-collapse" id="navbarExample">
+	                <ul class="navbar-nav ml-auto">
+	                    <li class="nav-item">
+	                        <a class="nav-link" href="#about">About</a>
+	                    </li>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a class="page-scroll" href="#about">About</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#services">Services</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#portfolio">Portfolio</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#contact">Contact</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
+	                    <li class="nav-item">
+	                        <a class="nav-link" href="#bspmemes">Beispiel Memes</a>
+	                    </li>
+
+											<li class="nav-item">
+												 <a class="nav-link" href="#login">Login</a>
+										 </li>
+
+	                    <li class="nav-item">
+	                        <a class="nav-link" href="#contact">Contact</a>
+	                    </li>
+	                </ul>
+	            </div>
+	        </div>
+	    </nav>
+
+	    <header class="masthead">
+	        <div class="header-content">
+	            <div class="header-content-inner">
+	                <h1 id="homeHeading" div class="bg-inverse text-white">ULTIMATE VONG MEMES</h1>
+	                <hr>
+	                <p div class="bg-inverse text-white">Erstelle deine eigenenen Memes und teile Sie mit uns!</p>
+	                <a class="btn btn-primary btn-xl" href="#about">Was sind Memes?</a>
+	            </div>
+	        </div>
+	    </header>
+
+	    <section class="bg-primary" id="about">
+	        <div class="container">
+	            <div class="row">
+	                <div class="col-lg-8 offset-lg-2 text-center">
+	                    <h2 class="section-heading text-white">Was sind Memes?</h2>
+	                    <hr class="light">
+	                    <p class="text-faded">Als Internetphänomen (auch Internet-Hype oder virales Phänomen) wird ein Konzept in Form eines Links oder einer Bild-, Ton- oder Videodatei bezeichnet, das sich schnell über das Internet verbreitet. Die am weitesten verbreitete Unterform ist die eines über das Internet verbreiteten Memes.</p>
+	                    <a class="btn btn-default btn-xl sr-button" href="#bspmemes">Zeig mir Beispiele!</a>
+	                </div>
+	            </div>
+	        </div>
+	    </section>
+
+			<!-- Beispiel Memes -->
+		<section class="no-padding" id="bspmemes">
+				<div class="container-fluid">
+						<div class="row no-gutter">
+								<div class="col-xs-6 col-sm-3">
+
+												<img class="img-fluid" src="img/portfolio/thumbnails/1.jpg" alt="">
+
+
+								</div>
+
+
+							 <div class="col-xs-6 col-sm-3">
+
+												<img class="img-fluid" src="img/portfolio/thumbnails/2.jpg" alt="">
+
+
+
+								</div>
+								<div class="col-xs-6 col-sm-3">
+
+												<img class="img-fluid" src="img/portfolio/thumbnails/3.jpg" alt="">
+
+
+
+								</div>
+								<div class="col-xs-6 col-sm-3">
+
+												<img class="img-fluid" src="img/portfolio/thumbnails/4.jpg" alt="">
+
+								</div>
+
+
+						</div>
+				</div>
+		</section>
+
+			    <!-- Der Login Bereich -->
+ <section id="login">
+	 <div class="container">
+
+
+
+
+	            <div class="row">
+	                <div class="col-lg-12 text-center">
+	                    <h2 class="section-heading">Login</h2>
+	                    <hr class="primary">
+	                </div>
+	            </div>
+<div class="signin-form">
+
+	<div class="container">
+
+
+       <form class="form-signin" method="post" id="login-form">
+
+
+
+			<?php
+	 	 		if(isset($msg)){
+		 		echo $msg;
+	 			}
+	 		?>
+
+			<div class="form-group">
+        <input type="email" class="form-control" placeholder="Email Addresse" name="email" required />
+        <span id="check-e"></span>
         </div>
-        <!-- /.container-fluid -->
-    </nav>
 
-    <header>
-        <div class="header-content">
-            <div class="header-content-inner">
-                <h1 id="homeHeading">Your Favorite Source of Free Bootstrap Themes</h1>
-                <hr>
-                <p>Start Bootstrap can help you build better websites using the Bootstrap CSS framework! Just download your template and start going, no strings attached!</p>
-                <a href="#about" class="btn btn-primary btn-xl page-scroll">Find Out More</a>
-            </div>
+        <div class="form-group">
+        <input type="password" class="form-control" placeholder="Passwort" name="password" required />
         </div>
-    </header>
 
-    <section class="bg-primary" id="about">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <h2 class="section-heading">We've got what you need!</h2>
-                    <hr class="light">
-                    <p class="text-faded">Start Bootstrap has everything you need to get your new website up and running in no time! All of the templates and themes on Start Bootstrap are open source, free to download, and easy to use. No strings attached!</p>
-                    <a href="#services" class="page-scroll btn btn-default btn-xl sr-button">Get Started!</a>
-                </div>
-            </div>
+     
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-default" name="btn-login" id="btn-login">
+    		<span class="glyphicon glyphicon-log-in"></span> &nbsp; Los gehts
+			</button>
+
+            <a href="register.php" class="btn btn-default" style="float:right;">oder registriere dich hier</a>
+
         </div>
-    </section>
 
-    <section id="services">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">At Your Service</h2>
-                    <hr class="primary">
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6 text-center">
-                    <div class="service-box">
-                        <i class="fa fa-4x fa-diamond text-primary sr-icons"></i>
-                        <h3>Sturdy Templates</h3>
-                        <p class="text-muted">Our templates are updated regularly so they don't break.</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 text-center">
-                    <div class="service-box">
-                        <i class="fa fa-4x fa-paper-plane text-primary sr-icons"></i>
-                        <h3>Ready to Ship</h3>
-                        <p class="text-muted">You can use this theme as is, or you can make changes!</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 text-center">
-                    <div class="service-box">
-                        <i class="fa fa-4x fa-newspaper-o text-primary sr-icons"></i>
-                        <h3>Up to Date</h3>
-                        <p class="text-muted">We update dependencies to keep things fresh.</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 text-center">
-                    <div class="service-box">
-                        <i class="fa fa-4x fa-heart text-primary sr-icons"></i>
-                        <h3>Made with Love</h3>
-                        <p class="text-muted">You have to make your websites with love these days!</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <section class="no-padding" id="portfolio">
-        <div class="container-fluid">
-            <div class="row no-gutter popup-gallery">
-                <div class="col-lg-4 col-sm-6">
-                    <a href="img/portfolio/fullsize/1.jpg" class="portfolio-box">
-                        <img src="img/portfolio/thumbnails/1.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Category
-                                </div>
-                                <div class="project-name">
-                                    Project Name
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="img/portfolio/fullsize/2.jpg" class="portfolio-box">
-                        <img src="img/portfolio/thumbnails/2.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Category
-                                </div>
-                                <div class="project-name">
-                                    Project Name
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="img/portfolio/fullsize/3.jpg" class="portfolio-box">
-                        <img src="img/portfolio/thumbnails/3.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Category
-                                </div>
-                                <div class="project-name">
-                                    Project Name
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="img/portfolio/fullsize/4.jpg" class="portfolio-box">
-                        <img src="img/portfolio/thumbnails/4.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Category
-                                </div>
-                                <div class="project-name">
-                                    Project Name
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="img/portfolio/fullsize/5.jpg" class="portfolio-box">
-                        <img src="img/portfolio/thumbnails/5.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Category
-                                </div>
-                                <div class="project-name">
-                                    Project Name
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="img/portfolio/fullsize/6.jpg" class="portfolio-box">
-                        <img src="img/portfolio/thumbnails/6.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Category
-                                </div>
-                                <div class="project-name">
-                                    Project Name
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <aside class="bg-dark">
-        <div class="container text-center">
-            <div class="call-to-action">
-                <h2>Free Download at Start Bootstrap!</h2>
-                <a href="http://startbootstrap.com/template-overviews/creative/" class="btn btn-default btn-xl sr-button">Download Now!</a>
-            </div>
-        </div>
-    </aside>
+      </form>
 
-    <section id="contact">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <h2 class="section-heading">Let's Get In Touch!</h2>
-                    <hr class="primary">
-                    <p>Ready to start your next project with us? That's great! Give us a call or send us an email and we will get back to you as soon as possible!</p>
-                </div>
-                <div class="col-lg-4 col-lg-offset-2 text-center">
-                    <i class="fa fa-phone fa-3x sr-contact"></i>
-                    <p>123-456-6789</p>
-                </div>
-                <div class="col-lg-4 text-center">
-                    <i class="fa fa-envelope-o fa-3x sr-contact"></i>
-                    <p><a href="mailto:your-email@your-domain.com">feedback@startbootstrap.com</a></p>
-                </div>
-            </div>
-        </div>
-    </section>
+    </div>
 
-    <!-- jQuery -->
-    <script src="vendor/jquery/jquery.min.js"></script>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 
-    <!-- Plugin JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-    <script src="vendor/scrollreveal/scrollreveal.min.js"></script>
-    <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+</div>
 
-    <!-- Theme JavaScript -->
-    <script src="js/creative.min.js"></script>
+
+
+
+
+
 
 </body>
-
 </html>
