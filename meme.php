@@ -33,7 +33,7 @@ $DBcon->close();
     <!-- Custom styles for this template -->
     <link href="css/creative.min.css" rel="stylesheet">
 
-
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.js"></script>
 
 
 </head>
@@ -74,18 +74,42 @@ $DBcon->close();
             <input type="file" id="file" />
         </div>
         <div id="image-container">
-            <canvas width="500" height="500"></canvas>
+            <canvas width="500" height="500" id="canvas"></canvas>
             <div>
                 <span>&Uuml;berschrift:</span><br/>
                 <input id="topLineText" type="text"><br/>
                 <span>Untertitel:</span><br/>
                 <input id="bottomLineText" type="text"><br/>
-                <button id="saveBtn">Speichern</button>
+                <button id="uploadBtn">Upload</button>
+                <a class="button" id="download">DOWNLOAD</a>
             </div>
         </div>
     </div>
 </div>
+
+
+
 <script>
+
+
+// UPLOAD DES MEMES
+$(document).ready(function() {
+
+   $("#uploadBtn").click(function() {
+     var canvas = document.getElementById('canvas');
+     var dataURL = canvas.toDataURL();
+     $.ajax({
+        type: "POST",
+        url: "uploadMeme.php",
+        data: { img: dataURL }
+     }).done(function(msg){
+        alert(msg);
+     });
+   });
+
+ });
+
+
     function textChangeListener (evt) {
         var id = evt.target.id;
         var text = evt.target.value;
@@ -144,9 +168,19 @@ $DBcon->close();
         ctx.strokeText(message, canvas.width / 2, verticalPosition());
     }
 
-    function saveFile() {
-        window.open(document.querySelector('canvas').toDataURL());
+    function uploadFile() {
+
     }
+
+    function downloadCanvas(link, canvasId, filename) {
+        link.href = document.getElementById(canvasId).toDataURL();
+        link.download = filename;
+    }
+    document.getElementById('download').addEventListener('click', function() {
+      downloadCanvas(this, 'canvas', 'meme.png');
+      }, false);
+
+
 
 
     function handleFileSelect(evt) {
@@ -182,7 +216,13 @@ $DBcon->close();
     input1.oninput = textChangeListener;
     input2.oninput = textChangeListener;
     document.getElementById('file').addEventListener('change', handleFileSelect, false);
-    document.querySelector('button').addEventListener('click', saveFile, false);
+    // document.querySelector('#uploadBtn').addEventListener('click', uploadFile, false);
+
+
+
+
+
+
 </script>
 
 </body>
