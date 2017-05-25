@@ -1,25 +1,18 @@
 <?php
 session_start();
 require_once 'database.php';
-
 if (isset($_SESSION['userSession'])!="") {
 	header("Location: meme.php");
 	exit;
 }
-
 if (isset($_POST['btn-login'])) {
-
 	$email = strip_tags($_POST['email']);
 	$password = strip_tags($_POST['password']);
-
 	$email = $DBcon->real_escape_string($email);
 	$password = $DBcon->real_escape_string($password);
-
 	$query = $DBcon->query("SELECT id, email, password FROM users WHERE email='$email'");
 	$row=$query->fetch_array();
-
 	$count = $query->num_rows; // if email/password are correct returns must be 1 row
-
 	if (password_verify($password, $row['password']) && $count==1) {
 		$_SESSION['userSession'] = $row['id'];
 		header("Location: meme.php");
@@ -30,11 +23,59 @@ if (isset($_POST['btn-login'])) {
 	}
 	$DBcon->close();
 }
-
 ?>
 
 <!DOCTYPE html>
-	<html lang="en">
+	<html lang="de">
+	<script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
+	<script src="./slick/slick.js" type="text/javascript" charset="utf-8"></script>
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript">
+	    $(document).on('ready', function() {
+	      $(".regular").slick({
+	        dots: true,
+	        infinite: true,
+	        slidesToShow: 3,
+	        slidesToScroll: 3
+	      });
+	      $(".center").slick({
+	        dots: true,
+	        infinite: true,
+	        centerMode: true,
+	        slidesToShow: 3,
+	        slidesToScroll: 3
+	      });
+	      $(".variable").slick({
+	        dots: true,
+	        infinite: true,
+	        variableWidth: true
+	      });
+	    });
+	  </script>
+
+		<script>
+
+
+		$(function(){
+		$.ajax({
+		            type: "GET",
+		            url: "getImage.php",
+		            dataType: "json",
+		            success: function (data) {
+
+		                $.each(data, function(i,filename) {
+
+		                    $('.container').on( 'dragstart', 'img', function() { return false; } );
+		                    $('.regular.slider').slick('slickAdd', "<div><img src=" + filename +"></div>");
+
+		                });
+		            }
+		        });
+		});
+
+
+		</script>
 
 	<head>
 
@@ -55,10 +96,32 @@ if (isset($_POST['btn-login'])) {
 
 		  <!-- Plugin CSS -->
 		 	<link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
+			<link rel="stylesheet" type="text/css" href="./slick/slick.css">
+			<link rel="stylesheet" type="text/css" href="./slick/slick-theme.css">
 
 			<!-- Custom styles for this template -->
 			<link href="css/creative.min.css" rel="stylesheet">
 
+			<style type="text/css">
+
+			          .slider {
+			              width: 90%;
+			              margin: auto;
+			          }
+
+			          .slick-slide {
+			            margin: 0px 20px;
+			          }
+
+			          .slick-slide img {
+			            width: 100%;
+			          }
+
+			          .slick-prev:before,
+			          .slick-next:before {
+			              color: black;
+			          }
+			    </style>
 
 </head>
 
@@ -119,48 +182,14 @@ if (isset($_POST['btn-login'])) {
 	    </section>
 
 			<!-- Beispiel Memes -->
-		<section class="no-padding" id="bspmemes">
-				<div class="container-fluid">
-						<div class="row no-gutter">
-								<div class="col-xs-6 col-sm-3">
-
-												<img class="img-fluid" src="img/portfolio/thumbnails/1.jpg" alt="">
+		<section class="regular slider" id="bspmemes">
 
 
-								</div>
-
-
-							 <div class="col-xs-6 col-sm-3">
-
-												<img class="img-fluid" src="img/portfolio/thumbnails/2.jpg" alt="">
-
-
-
-								</div>
-								<div class="col-xs-6 col-sm-3">
-
-												<img class="img-fluid" src="img/portfolio/thumbnails/3.jpg" alt="">
-
-
-
-								</div>
-								<div class="col-xs-6 col-sm-3">
-
-												<img class="img-fluid" src="img/portfolio/thumbnails/4.jpg" alt="">
-
-								</div>
-
-
-						</div>
-				</div>
 		</section>
 
 			    <!-- Der Login Bereich -->
  <section id="login">
 	 <div class="container">
-
-
-
 
 	            <div class="row">
 	                <div class="col-lg-12 text-center">
@@ -192,7 +221,7 @@ if (isset($_POST['btn-login'])) {
         <input type="password" class="form-control" placeholder="Passwort" name="password" required />
         </div>
 
-     
+
 
         <div class="form-group">
             <button type="submit" class="btn btn-default" name="btn-login" id="btn-login">
@@ -209,14 +238,7 @@ if (isset($_POST['btn-login'])) {
 
     </div>
 
-
-
 </div>
-
-
-
-
-
 
 
 </body>
