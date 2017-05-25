@@ -9,6 +9,7 @@ if(isset($_POST['btn-signup'])) {
 
 
 	$email = strip_tags($_POST['email']);
+	$name = strip_tags($_POST['name']);
 	$upass = strip_tags($_POST['password']);
 
 
@@ -85,7 +86,10 @@ if(isset($_POST['btn-signup'])) {
 		}
 		?>
 
-
+		<div class="form-group">
+        <input type="name" class="form-control" placeholder="Name" name="name" required  />
+        <span id="check-e"></span>
+        </div>
 
         <div class="form-group">
         <input type="email" class="form-control" placeholder="Email Addresse" name="email" required  />

@@ -20,6 +20,7 @@ DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(250) NOT NULL DEFAULT '',
   `email` varchar(250) NOT NULL DEFAULT '',
   `password` varchar(200) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
