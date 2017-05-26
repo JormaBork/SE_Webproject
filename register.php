@@ -10,20 +10,21 @@ if(isset($_POST['btn-signup'])) {
 
 	$email = strip_tags($_POST['email']);
 	$name = strip_tags($_POST['name']);
-	$upass = strip_tags($_POST['password']);
+	$pass = strip_tags($_POST['password']);
 
 
-	$email = $DBcon->real_escape_string($email);
-	$upass = $DBcon->real_escape_string($upass);
+	$uemail = $DBcon->real_escape_string($email);
+	$uname = $DBcon->real_escape_string($name);
+	$upass = $DBcon->real_escape_string($pass);
 
-	$hashed_password = password_hash($upass, PASSWORD_DEFAULT);
+	$hashed_password = password_hash($pass, PASSWORD_DEFAULT);
 
 	$check_email = $DBcon->query("SELECT email FROM users WHERE email='$email'");
 	$count=$check_email->num_rows;
 
 	if ($count==0) {
 
-		$query = "INSERT INTO users(email,password) VALUES('$email','$hashed_password')";
+		$query = "INSERT INTO users(name,email,password) VALUES('$name','$email','$hashed_password')";
 
 		if ($DBcon->query($query)) {
 			$msg = "<div class='alert alert-success'>
@@ -88,7 +89,7 @@ if(isset($_POST['btn-signup'])) {
 
 		<div class="form-group">
         <input type="name" class="form-control" placeholder="Name" name="name" required  />
-        <span id="check-e"></span>
+        
         </div>
 
         <div class="form-group">
