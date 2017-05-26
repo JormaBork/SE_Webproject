@@ -1,4 +1,11 @@
 <?php
+  session_start();
+
+  if (!isset($_SESSION['userSession'])) {
+      header("Location: index.php");
+  }
+
+  require_once 'database.php';
 
    $img = $_POST['img'];
 
@@ -10,7 +17,21 @@
       $file = 'images/'.date("YmdHis").'.png';
 
       if (file_put_contents($file, $data)) {
-         echo "Erfolgreich hochgeladen!.";
+        $bild = substr($file, 7);
+        $id = $_SESSION['userSession'];
+
+        $query= "INSERT INTO memes (filename, userid) VALUES('$bild','$id')";
+
+        if ($DBcon->query($query)) {
+
+            echo 'DB okay!';
+        } else {
+            echo 'DB nicht okay!';
+        }
+
+        $DBcon->close();
+       echo " Erfolgreich hochgeladen!";
+
       } else {
          echo 'Konnte nicht hochgeladen werden.';
       }
