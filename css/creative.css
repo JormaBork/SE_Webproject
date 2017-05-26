@@ -93,7 +93,7 @@ body {
     color: #F05F40;
     font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif; }
     #mainNav .navbar-brand:hover, #mainNav .navbar-brand:focus {
-      color: #f05f40; }
+      color: #FFFFFF; }
   #mainNav .navbar-toggle {
     font-size: 12px;
     font-weight: 700;
@@ -104,10 +104,10 @@ body {
     font-size: 13px;
     font-weight: 700;
     text-transform: uppercase;
-    color: #222222; }
+    color: #F05F40; }
     #mainNav .navbar-nav > li.nav-item > a.nav-link:hover,
     #mainNav .navbar-nav > li.nav-item > a.nav-link:focus:hover {
-      color: #F05F40; }
+      color: #e6e6e6; }
     #mainNav .navbar-nav > li.nav-item > a.nav-link.active,
     #mainNav .navbar-nav > li.nav-item > a.nav-link:focus.active {
       color: #F05F40 !important;
@@ -139,10 +139,10 @@ body {
             color: #f05f40; }
         #mainNav.navbar-shrink .navbar-nav > li.nav-item > a.nav-link,
         #mainNav.navbar-shrink .navbar-nav > li.nav-item > a.nav-link:focus {
-          color: #222222; }
+          color: #F05F40; }
           #mainNav.navbar-shrink .navbar-nav > li.nav-item > a.nav-link:hover,
           #mainNav.navbar-shrink .navbar-nav > li.nav-item > a.nav-link:focus:hover {
-            color: #F05F40; } }
+            color: #f05f40; } }
 
 header.masthead {
   position: relative;

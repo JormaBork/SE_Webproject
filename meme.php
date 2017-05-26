@@ -6,8 +6,8 @@ if (!isset($_SESSION['userSession'])) {
     header("Location: index.php");
 }
 
-$query = $DBcon->query("SELECT * FROM users WHERE id=".$_SESSION['userSession']);
-$userRow=$query->fetch_array();
+$query = $DBcon->query("SELECT * FROM users WHERE id=" . $_SESSION['userSession']);
+$userRow = $query->fetch_array();
 $DBcon->close();
 
 ?>
@@ -20,29 +20,40 @@ $DBcon->close();
 
 
     <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom fonts for this template -->
     <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
+          rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic'
+          rel='stylesheet' type='text/css'>
 
     <!-- Plugin CSS -->
     <link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/creative.min.css" rel="stylesheet">
+    <link href="css/creative.css" rel="stylesheet">
 
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="vendor/tether/tether.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/creative.min.js"></script>
 
+    <style>
+
+
+    </style>
 
 </head>
 
 <body>
 <body id="page-top">
 <!-- Navigation -->
-<nav class="navbar fixed-top navbar-toggleable-md navbar-light navbar-inverse bg-inverse" id="mainNav">
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarExample" aria-controls="navbarExample" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar fixed-top navbar-toggleable-md navbar-inverse bg-inverse" id="mainNav">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+            data-target="#navbarExample" aria-controls="navbarExample" aria-expanded="false"
+            aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="container">
@@ -52,7 +63,7 @@ $DBcon->close();
 
 
                 <li class="nav-item">
-                    <?php if( !empty($userRow) ): ?>
+                    <?php if (!empty($userRow)): ?>
                         <a class="nav-link" href="logout.php?logout">Logout</a>
                     <?php endif; ?>
                 </li>
@@ -68,10 +79,8 @@ $DBcon->close();
         <h1>ULTIMATE VONG Meme Generator</h1>
 
 
-
-
         <div>
-            <input type="file" id="file" />
+            <input type="file" id="file"/>
         </div>
         <div id="image-container">
             <canvas width="500" height="500" id="canvas"></canvas>
@@ -88,29 +97,28 @@ $DBcon->close();
 </div>
 
 
-
 <script>
 
 
-// UPLOAD DES MEMES
-$(document).ready(function() {
+    // UPLOAD DES MEMES
+    $(document).ready(function () {
 
-   $("#uploadBtn").click(function() {
-     var canvas = document.getElementById('canvas');
-     var dataURL = canvas.toDataURL();
-     $.ajax({
-        type: "POST",
-        url: "uploadMeme.php",
-        data: { img: dataURL }
-     }).done(function(msg){
-        alert(msg);
-     });
-   });
+        $("#uploadBtn").click(function () {
+            var canvas = document.getElementById('canvas');
+            var dataURL = canvas.toDataURL();
+            $.ajax({
+                type: "POST",
+                url: "uploadMeme.php",
+                data: {img: dataURL}
+            }).done(function (msg) {
+                alert(msg);
+            });
+        });
 
- });
+    });
 
 
-    function textChangeListener (evt) {
+    function textChangeListener(evt) {
         var id = evt.target.id;
         var text = evt.target.value;
 
@@ -145,14 +153,18 @@ $(document).ready(function() {
         ctx.drawImage(image, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, destWidth, destHeight);
 
         // ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-        if (topLine) { drawMessage(canvas, ctx, 'top', topLine); }
-        if (bottomLine) { drawMessage(canvas, ctx, 'bottom', bottomLine); }
+        if (topLine) {
+            drawMessage(canvas, ctx, 'top', topLine);
+        }
+        if (bottomLine) {
+            drawMessage(canvas, ctx, 'bottom', bottomLine);
+        }
     }
 
     function drawMessage(canvas, ctx, position, message) {
         var fontSize = 50;
         var padding = 10;
-        var verticalPosition = function() {
+        var verticalPosition = function () {
             if (position === 'top') {
                 return fontSize + padding;
             } else {
@@ -164,23 +176,18 @@ $(document).ready(function() {
         ctx.fillStyle = 'white';
         ctx.fillText(message, canvas.width / 2, verticalPosition());
         ctx.strokeStyle = 'black';
-        ctx.lineWidth = fontSize/14;
+        ctx.lineWidth = fontSize / 14;
         ctx.strokeText(message, canvas.width / 2, verticalPosition());
     }
 
-    function uploadFile() {
-
-    }
 
     function downloadCanvas(link, canvasId, filename) {
         link.href = document.getElementById(canvasId).toDataURL();
         link.download = filename;
     }
-    document.getElementById('download').addEventListener('click', function() {
-      downloadCanvas(this, 'canvas', 'meme.png');
-      }, false);
-
-
+    document.getElementById('download').addEventListener('click', function () {
+        downloadCanvas(this, 'canvas', 'meme.png');
+    }, false);
 
 
     function handleFileSelect(evt) {
@@ -189,14 +196,13 @@ $(document).ready(function() {
         var file = evt.target.files[0];
 
 
-
         var reader = new FileReader();
-        reader.onload = function(fileObject) {
+        reader.onload = function (fileObject) {
             var data = fileObject.target.result;
 
             // Create an image object
             var image = new Image();
-            image.onload = function() {
+            image.onload = function () {
 
                 window.imageSrc = this;
                 redrawMeme(window.imageSrc, null, null);
@@ -217,10 +223,6 @@ $(document).ready(function() {
     input2.oninput = textChangeListener;
     document.getElementById('file').addEventListener('change', handleFileSelect, false);
     // document.querySelector('#uploadBtn').addEventListener('click', uploadFile, false);
-
-
-
-
 
 
 </script>
