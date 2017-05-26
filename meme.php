@@ -28,6 +28,8 @@ $DBcon->close();
           rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic'
           rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
+
 
     <!-- Plugin CSS -->
     <link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
@@ -162,7 +164,7 @@ $DBcon->close();
     }
 
     function drawMessage(canvas, ctx, position, message) {
-        var fontSize = 50;
+        var fontSize = 46;
         var padding = 10;
         var verticalPosition = function () {
             if (position === 'top') {
@@ -171,12 +173,12 @@ $DBcon->close();
                 return canvas.height - padding;
             }
         };
-        ctx.font = fontSize + 'pt Impact';
+        ctx.font = '400 small-caps 44pt Anton';
         ctx.textAlign = 'center';
         ctx.fillStyle = 'white';
         ctx.fillText(message, canvas.width / 2, verticalPosition());
         ctx.strokeStyle = 'black';
-        ctx.lineWidth = fontSize / 14;
+        ctx.lineWidth = fontSize / 18;
         ctx.strokeText(message, canvas.width / 2, verticalPosition());
     }
 
