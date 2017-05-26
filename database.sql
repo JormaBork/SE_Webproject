@@ -1,46 +1,91 @@
-# ************************************************************
-# Host: localhost (MySQL 5.5.42)
-# Database: database
-# ************************************************************
+-- phpMyAdmin SQL Dump
+-- version 4.6.5.2
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Erstellungszeit: 26. Mai 2017 um 12:23
+-- Server-Version: 10.1.21-MariaDB
+-- PHP-Version: 5.6.30
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+/*!40101 SET NAMES utf8mb4 */;
 
+--
+-- Datenbank: `test`
+--
 
-# Dump of table users
-# ------------------------------------------------------------
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS `users`;
+--
+-- Tabellenstruktur für Tabelle `memes`
+--
+
+CREATE TABLE `memes` (
+  `memeid` int(11) NOT NULL,
+  `filename` varchar(250) NOT NULL,
+  `userid` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `users`
+--
 
 CREATE TABLE `users` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(250) NOT NULL DEFAULT '',
-  `email` varchar(250) NOT NULL DEFAULT '',
-  `password` varchar(200) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `id` int(11) NOT NULL,
+  `name` varchar(250) NOT NULL,
+  `email` varchar(250) NOT NULL,
+  `password` varchar(250) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+--
+-- Indizes der exportierten Tabellen
+--
 
-INSERT INTO `users` (`id`, `email`, `password`)
-VALUES
-	(1,'admin@admin.de','$2y$10$tiMS2takQBQwSGwaDxSGNO2RiitS/GhvWjKpJA/JKIMDeLr2z7SLm');
+--
+-- Indizes für die Tabelle `memes`
+--
+ALTER TABLE `memes`
+  ADD PRIMARY KEY (`memeid`),
+  ADD KEY `userid` (`userid`);
 
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
-UNLOCK TABLES;
+--
+-- Indizes für die Tabelle `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
 
+--
+-- AUTO_INCREMENT für exportierte Tabellen
+--
 
+--
+-- AUTO_INCREMENT für Tabelle `memes`
+--
+ALTER TABLE `memes`
+  MODIFY `memeid` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT für Tabelle `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- Constraints der exportierten Tabellen
+--
 
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+--
+-- Constraints der Tabelle `memes`
+--
+ALTER TABLE `memes`
+  ADD CONSTRAINT `memes_ibfk_1` FOREIGN KEY (`memeid`) REFERENCES `users` (`id`);
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
