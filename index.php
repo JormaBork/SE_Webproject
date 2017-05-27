@@ -209,7 +209,7 @@ if (isset($_POST['btn-login'])) {
         <!-- Custom scripts for this template -->
         <script src="js/creative.min.js"></script>
 
-
+        
         <script type="text/javascript">
             $(document).on('ready', function () {
                 $(".regular").slick({
@@ -248,7 +248,7 @@ if (isset($_POST['btn-login'])) {
                             $('.container').on('dragstart', 'img', function () {
                                 return false;
                             });
-                            $('.regular.slider').slick('slickAdd', "<div><img src=" + filename + "></div>");
+                            $('.regular.slider').slick('slickAdd', "<div><img src=images/" + filename + "></div>");
 
                         });
                     }
