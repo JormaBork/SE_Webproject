@@ -27,60 +27,6 @@ if (isset($_POST['btn-login'])) {
 
 <!DOCTYPE html>
 <html lang="de">
-<script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
-<script src="./slick/slick.js" type="text/javascript" charset="utf-8"></script>
-<script src="vendor/tether/tether.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-<script src="js/creative.min.js"></script>
-
-
-<script type="text/javascript">
-    $(document).on('ready', function () {
-        $(".regular").slick({
-            dots: true,
-            infinite: true,
-            slidesToShow: 3,
-            slidesToScroll: 3
-        });
-        $(".center").slick({
-            dots: true,
-            infinite: true,
-            centerMode: true,
-            slidesToShow: 3,
-            slidesToScroll: 3
-        });
-        $(".variable").slick({
-            dots: true,
-            infinite: true,
-            variableWidth: true
-        });
-    });
-</script>
-
-<script>
-
-
-    $(function () {
-        $.ajax({
-            type: "GET",
-            url: "getImage.php",
-            dataType: "json",
-            success: function (data) {
-
-                $.each(data, function (i, filename) {
-
-                    $('.container').on('dragstart', 'img', function () {
-                        return false;
-                    });
-                    $('.regular.slider').slick('slickAdd', "<div><img src=" + filename + "></div>");
-
-                });
-            }
-        });
-    });
-
-
-</script>
 
 <head>
 
@@ -249,6 +195,68 @@ if (isset($_POST['btn-login'])) {
             </div>
 
         </div>
+
+        <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
+        <script src="./slick/slick.js" type="text/javascript" charset="utf-8"></script>
+        <script src="vendor/tether/tether.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+        <!-- Plugin JavaScript -->
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+        <script src="vendor/scrollreveal/scrollreveal.min.js"></script>
+        <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+
+        <!-- Custom scripts for this template -->
+        <script src="js/creative.min.js"></script>
+
+
+        <script type="text/javascript">
+            $(document).on('ready', function () {
+                $(".regular").slick({
+                    dots: true,
+                    infinite: true,
+                    slidesToShow: 3,
+                    slidesToScroll: 3
+                });
+                $(".center").slick({
+                    dots: true,
+                    infinite: true,
+                    centerMode: true,
+                    slidesToShow: 3,
+                    slidesToScroll: 3
+                });
+                $(".variable").slick({
+                    dots: true,
+                    infinite: true,
+                    variableWidth: true
+                });
+            });
+        </script>
+
+        <script>
+
+
+            $(function () {
+                $.ajax({
+                    type: "GET",
+                    url: "getImage.php",
+                    dataType: "json",
+                    success: function (data) {
+
+                        $.each(data, function (i, filename) {
+
+                            $('.container').on('dragstart', 'img', function () {
+                                return false;
+                            });
+                            $('.regular.slider').slick('slickAdd', "<div><img src=" + filename + "></div>");
+
+                        });
+                    }
+                });
+            });
+
+
+        </script>
 
 
 </body>
