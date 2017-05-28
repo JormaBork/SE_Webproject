@@ -118,10 +118,13 @@ $DBcon->close();
         $("#uploadBtn").click(function () {
             var canvas = document.getElementById('canvas');
             var dataURL = canvas.toDataURL();
+            var memetext = $("#topLineText").val() +" "+ $("#bottomLineText").val();
+
             $.ajax({
                 type: "POST",
                 url: "uploadMeme.php",
-                data: {img: dataURL}
+                data: {img: dataURL, memetext: memetext}
+
             }).done(function (msg) {
                 alert(msg);
             });

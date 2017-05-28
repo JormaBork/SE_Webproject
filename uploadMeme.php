@@ -8,6 +8,7 @@
   require_once 'database.php';
 
    $img = $_POST['img'];
+   $text = $_POST['memetext'];
 
    if (strpos($img, 'data:image/png;base64') === 0) {
 
@@ -20,7 +21,7 @@
         $bild = substr($file, 7);
         $id = $_SESSION['userSession'];
 
-        $query= "INSERT INTO memes (filename, userid) VALUES('$bild','$id')";
+        $query= "INSERT INTO memes (filename, memetext, userid) VALUES('$bild','$text','$id')";
 
         if ($DBcon->query($query)) {
 
