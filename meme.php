@@ -38,7 +38,6 @@ $DBcon->close();
     <link href="css/creative.css" rel="stylesheet">
 
 
-
     <style>
 
 
@@ -73,29 +72,60 @@ $DBcon->close();
     </div>
 </nav>
 
+<section id="memegen">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="section-heading">Erstelle deine eigenen Memes</h2>
+
+                <p class="text">Lade einfach die gewünschte Datei und bearbeite sie.</p>
+                <label class="btn btn-primary btn-file">Datei auswählen <input type="file" id="file"
+                                                                               style="display: none"></label>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12" id="image-container">
+                        <canvas width="500" height="500" id="canvas" style="background-color: grey;"></canvas>
+                        <div class="col-lg-12">
+                            <div class="form-group row">
+                                <div class="col-xs-5">
+                                    <label for="usr">&Uuml;berschrift:</label>
+                                    <input type="text" class="form-control" id="topLineText">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-xs-5">
+                                    <label for="usr">Untertitel:</label>
+                                    <input type="text" class="form-control" id="bottomLineText">
+                                </div>
+
+
+                            </div>
+                            <div class="btn-group-vertical" data-toggle="buttons">
+                                <label class="btn btn-primary" id="uploadBtn">Upload</label>
+                                <a class="btn btn-primary" id="download" role="button">Download</a>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+</section>
+
 <div class="content">
     <div class="container">
-        <h1>ULTIMATE VONG Meme Generator</h1>
 
 
-        <div>
+        <!-- <div>
             <input type="file" id="file"/>
-        </div>
-        <div id="image-container">
-            <canvas width="500" height="500" id="canvas"></canvas>
-            <div>
-                <span>&Uuml;berschrift:</span><br/>
-                <input id="topLineText" type="text"><br/>
-                <span>Untertitel:</span><br/>
-                <input id="bottomLineText" type="text"><br/>
-                <button id="uploadBtn">Upload</button>
-                <a class="button" id="download">DOWNLOAD</a>
-            </div>
-        </div>
+        </div> -->
+
     </div>
 </div>
 
-  <!-- Bootstrap core JavaScript -->
+<!-- Bootstrap core JavaScript -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="vendor/tether/tether.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
@@ -118,7 +148,7 @@ $DBcon->close();
         $("#uploadBtn").click(function () {
             var canvas = document.getElementById('canvas');
             var dataURL = canvas.toDataURL();
-            var memetext = $("#topLineText").val() +" "+ $("#bottomLineText").val();
+            var memetext = $("#topLineText").val() + " " + $("#bottomLineText").val();
 
             $.ajax({
                 type: "POST",
