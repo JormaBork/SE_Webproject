@@ -33,13 +33,14 @@ $DBcon->close();
 
     <!-- Plugin CSS -->
     <link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/6.6.2/sweetalert2.min.css" type="text/css" />
 
     <!-- Custom styles for this template -->
     <link href="css/creative.css" rel="stylesheet">
 
 
-    <style>
 
+    <style>
 
     </style>
 
@@ -79,53 +80,53 @@ $DBcon->close();
                 <h2 class="section-heading">Erstelle deine eigenen Memes</h2>
 
                 <p class="text">Lade einfach die gewünschte Datei und bearbeite sie.</p>
-                <label class="btn btn-primary btn-file">Datei auswählen <input type="file" id="file"
-                                                                               style="display: none"></label>
+                <label class="btn btn-primary btn-file">Datei auswählen <input type="file" id="file" style="display: none"></label>
             </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12" id="image-container">
-                        <canvas width="500" height="500" id="canvas" style="background-color: grey;"></canvas>
-                        <div class="col-lg-12">
-                            <div class="form-group row">
-                                <div class="col-xs-5">
-                                    <label for="usr">&Uuml;berschrift:</label>
-                                    <input type="text" class="form-control" id="topLineText">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-xs-5">
-                                    <label for="usr">Untertitel:</label>
-                                    <input type="text" class="form-control" id="bottomLineText">
-                                </div>
-
-
-                            </div>
-                            <div class="btn-group-vertical" data-toggle="buttons">
-                                <label class="btn btn-primary" id="uploadBtn">Upload</label>
-                                <a class="btn btn-primary" id="download" role="button">Download</a>
-                            </div>
-
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12" id="image-container">
+                <canvas width="500" height="500" id="canvas" style="background-color: grey;"></canvas>
+                <div class="col-lg-12">
+                  <div class="form-group row">
+                       <div class="col-xs-5">
+                          <label for="usr">&Uuml;berschrift:</label>
+                          <input type="text" class="form-control" id="topLineText">
                         </div>
+                  </div>
+                  <div class="form-group row">
+                       <div class="col-xs-5">
+                          <label for="usr">Untertitel:</label>
+                          <input type="text" class="form-control" id="bottomLineText">
+                       </div>
+
+
+                  </div>
+                    <div class="btn-group-vertical" data-toggle="buttons">
+                        <label class="btn btn-primary" id="uploadBtn">Upload</label>
+                        <a class="btn btn-primary" id="download" role="button">Download</a>
                     </div>
 
                 </div>
-
             </div>
-</section>
 
-<div class="content">
-    <div class="container">
-
-
-        <!-- <div>
-            <input type="file" id="file"/>
-        </div> -->
+        </div>
 
     </div>
-</div>
+</section>
 
-<!-- Bootstrap core JavaScript -->
+<section id="editmeme">
+  <div class="container">
+
+        <div class="page-header">
+        <h3>Verwalte deine Memes</h3>
+        </div>
+
+        <div id="load-memes"></div> <!-- products will be load here -->
+
+    </div>
+</section>
+
+  <!-- Bootstrap core JavaScript -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="vendor/tether/tether.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
@@ -135,6 +136,7 @@ $DBcon->close();
 <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 <script src="vendor/scrollreveal/scrollreveal.min.js"></script>
 <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+<script src="https://cdn.jsdelivr.net/sweetalert2/6.6.2/sweetalert2.min.js"></script>
 
 <!-- Custom scripts for this template -->
 <script src="js/creative.min.js"></script>
@@ -148,7 +150,7 @@ $DBcon->close();
         $("#uploadBtn").click(function () {
             var canvas = document.getElementById('canvas');
             var dataURL = canvas.toDataURL();
-            var memetext = $("#topLineText").val() + " " + $("#bottomLineText").val();
+            var memetext = $("#topLineText").val() +" "+ $("#bottomLineText").val();
 
             $.ajax({
                 type: "POST",
@@ -157,8 +159,11 @@ $DBcon->close();
 
             }).done(function (msg) {
                 alert(msg);
+                readMemes();
             });
         });
+
+
 
     });
 
@@ -270,6 +275,64 @@ $DBcon->close();
     // document.querySelector('#uploadBtn').addEventListener('click', uploadFile, false);
 
 
+</script>
+<script>
+
+// TABELLE FUER DIE VERWALTUNG DER MEMES
+$(document).ready(function(){
+
+		readMemes(); /* it will load products when document loads */
+
+		$(document).on('click', '#delete_meme', function(e){
+
+			var memeID = $(this).data('id');
+			SwalDelete(memeID);
+			e.preventDefault();
+		});
+
+	});
+
+	function SwalDelete(memeID){
+
+		swal({
+			title: 'Bist du dir sicher?',
+			text: "Dein Meme wird dadurch dauerhaft gelöscht!",
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+      cancelButtonText: 'Abbrechen',
+			confirmButtonText: 'Ja, weg damit!',
+			showLoaderOnConfirm: true,
+
+			preConfirm: function() {
+			  return new Promise(function(resolve) {
+
+			     $.ajax({
+			   		url: 'delete.php',
+			    	type: 'POST',
+			       	data: 'delete='+memeID,
+			       	dataType: 'json'
+			     })
+			     .done(function(response){
+			     	swal('Gelöscht!', response.message, response.status);
+					readMemes();
+			     })
+			     .fail(function(){
+			     	swal('Oops...', 'Da ist was schief gelaufen', 'error');
+			     });
+			  });
+		    },
+			allowOutsideClick: false
+		});
+
+    readMemes();
+
+	}
+
+	function readMemes(){
+		$('#load-memes').load('readTable.php');
+	}
 </script>
 
 </body>
