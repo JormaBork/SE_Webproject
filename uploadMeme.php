@@ -5,7 +5,7 @@
       header("Location: index.php");
   }
 
-  require_once 'database.php';
+  require_once 'dbconn.php';
 
    $img = $_POST['img'];
    $text = $_POST['memetext'];
@@ -18,24 +18,26 @@
       $file = 'images/'.date("YmdHis").'.png';
 
       if (file_put_contents($file, $data)) {
-        $bild = substr($file, 7);
-        $id = $_SESSION['userSession'];
+            $bild = substr($file, 7);
+            $id = $_SESSION['userSession'];
 
-        $query= "INSERT INTO memes (filename, memetext, userid) VALUES('$bild','$text','$id')";
+            // Error Handling fuer DB 
+        try {
 
-        if ($DBcon->query($query)) {
+            $query= "INSERT INTO memes (filename, memetext, userid) VALUES(?, ?, ?)";
+            $stmt = $DBcon->prepare( $query );
+            $stmt->execute(array($bild, $text, $id));
+            echo " Erfolgreich hochgeladen!";
+
+        } catch( PDOException $e ) {
+                echo 'Leider gab es ein Problem';
+              }
 
 
-        } else {
-
-        }
-
-        $DBcon->close();
-       echo " Erfolgreich hochgeladen!";
-
-      } else {
-         echo 'Konnte nicht hochgeladen werden.';
       }
+
+
+
 
    }
 
