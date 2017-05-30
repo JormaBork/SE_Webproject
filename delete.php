@@ -8,14 +8,23 @@
 
 		require_once 'dbconn.php';
 
-		$pid = intval($_POST['memeID']);
+		$mid = intval($_POST['memeID']);
 
+		// $stmt_select = $DB_con->prepare('SELECT filename FROM memes WHERE memeid =:mid');
+		// $stmt_select->execute(array(':mid'=>$mid));
+		// $imgRow=$stmt_select->fetch(PDO::FETCH_ASSOC);
+		// unlink("images/".$imgRow['filename']);
 
-		$query = "DELETE FROM memes WHERE memeid=:pid";
-		$stmt = $DBcon->prepare( $query );
-		$stmt->execute(array(':pid'=>$pid));
+		$query = "SELECT filename FROM memes WHERE memeid=:mid";
+		$stmt_select = $DBcon->prepare( $query );
+		$stmt_select->execute(array(':mid'=>$mid));
+		$result = $stmt_select->fetchALL(PDO::FETCH_ASSOC);
 
-		if ($stmt) {
+		if ($result) {
+			unlink("images/".$result[0]['filename']);
+			$query = "DELETE FROM memes WHERE memeid=:mid";
+			$stmt = $DBcon->prepare( $query );
+			$stmt->execute(array(':mid'=>$mid));
 			$response['status']  = 'success';
 			$response['message'] = 'Erfolgreich gelöscht... ';
 		} else {
@@ -23,4 +32,5 @@
 			$response['message'] = 'Fehler beim Löschen...';
 		}
 		echo json_encode($response);
-	}
+
+}
