@@ -25,9 +25,9 @@
 
         if ($DBcon->query($query)) {
 
-            echo 'DB okay!';
+
         } else {
-            echo 'DB nicht okay!';
+
         }
 
         $DBcon->close();

@@ -158,7 +158,7 @@ $DBcon->close();
                 data: {img: dataURL, memetext: memetext}
 
             }).done(function (msg) {
-                alert(msg);
+                swal(msg);
                 readMemes();
             });
         });
@@ -307,11 +307,10 @@ $(document).ready(function(){
 
 			preConfirm: function() {
 			  return new Promise(function(resolve) {
-
 			     $.ajax({
 			   		url: 'delete.php',
 			    	type: 'POST',
-			       	data: 'delete='+memeID,
+			       	data: 'memeID='+memeID,
 			       	dataType: 'json'
 			     })
 			     .done(function(response){
