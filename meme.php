@@ -1,14 +1,17 @@
 <?php
 session_start();
-include_once 'database.php';
+include_once 'dbconn.php';
 
 if (!isset($_SESSION['userSession'])) {
     header("Location: index.php");
 }
 
-$query = $DBcon->query("SELECT * FROM users WHERE id=" . $_SESSION['userSession']);
-$userRow = $query->fetch_array();
-$DBcon->close();
+$userID = $_SESSION['userSession'];
+$query = "SELECT id FROM users WHERE id=$userID";
+$stmt = $DBcon->prepare( $query );
+$stmt->execute();
+$results = $stmt->fetch(PDO::FETCH_ASSOC);
+$results = count($results);
 
 ?>
 
@@ -60,12 +63,18 @@ $DBcon->close();
         <div class="collapse navbar-collapse" id="navbarExample">
             <ul class="navbar-nav ml-auto">
 
+              <li class="nav-item">
+                    <a class="nav-link" href="index.php">Hauptseite</a>
+
+              </li>
+
 
                 <li class="nav-item">
-                    <?php if (!empty($userRow)): ?>
+                    <?php if ($results > 0): ?>
                         <a class="nav-link" href="logout.php?logout">Logout</a>
                     <?php endif; ?>
                 </li>
+
 
 
             </ul>
