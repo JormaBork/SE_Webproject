@@ -209,14 +209,52 @@ if (isset($_POST['btn-login'])) {
         <!-- Custom scripts for this template -->
         <script src="js/creative.min.js"></script>
 
-        
+
         <script type="text/javascript">
             $(document).on('ready', function () {
                 $(".regular").slick({
                     dots: true,
                     infinite: true,
-                    slidesToShow: 3,
-                    slidesToScroll: 3
+                    slidesToShow: 4,
+                    slidesToScroll: 4,
+                    responsive: [
+                      {
+                        breakpoint: 2100,
+                        settings: {
+                          slidesToShow: 4,
+                          slidesToScroll: 4,
+                          infinite: true,
+                          dots: true
+                        }
+                      },
+
+                      {
+                        breakpoint: 1600,
+                        settings: {
+                          slidesToShow: 3,
+                          slidesToScroll: 3,
+                          infinite: true,
+                          dots: true
+                        }
+                      },
+                    {
+                      breakpoint: 1000,
+                      settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2,
+                        infinite: true,
+                        dots: true
+                      }
+                    },
+                    {
+                      breakpoint: 700,
+                      settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1
+                      }
+                    }
+
+                  ]
                 });
                 $(".center").slick({
                     dots: true,
