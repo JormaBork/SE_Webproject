@@ -1,28 +1,7 @@
 <?php
 session_start();
-require_once 'database.php';
-if (isset($_SESSION['userSession']) != "") {
-    header("Location: meme.php");
-    exit;
-}
-if (isset($_POST['btn-login'])) {
-    $email = strip_tags($_POST['email']);
-    $password = strip_tags($_POST['password']);
-    $email = $DBcon->real_escape_string($email);
-    $password = $DBcon->real_escape_string($password);
-    $query = $DBcon->query("SELECT id, email, password FROM users WHERE email='$email'");
-    $row = $query->fetch_array();
-    $count = $query->num_rows; // if email/password are correct returns must be 1 row
-    if (password_verify($password, $row['password']) && $count == 1) {
-        $_SESSION['userSession'] = $row['id'];
-        header("Location: meme.php");
-    } else {
-        $msg = "<div class='alert alert-danger'>
-					<span class='glyphicon glyphicon-info-sign'></span> &nbsp; Falsche E-Mail oder Passwort !
-				</div>";
-    }
-    $DBcon->close();
-}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -163,19 +142,17 @@ if (isset($_POST['btn-login'])) {
                 <form class="form-signin" method="post" id="login-form">
 
 
-                    <?php
-                    if (isset($msg)) {
-                        echo $msg;
-                    }
-                    ?>
+                  <div id="error">
+                  <!-- error will be shown here ! -->
+                  </div>
 
                     <div class="form-group">
-                        <input type="email" class="form-control" placeholder="Email Addresse" name="email" required/>
+                        <input type="email" class="form-control" placeholder="Email Addresse" name="email" id="email"/>
                         <span id="check-e"></span>
                     </div>
 
                     <div class="form-group">
-                        <input type="password" class="form-control" placeholder="Passwort" name="password" required/>
+                        <input type="password" class="form-control" placeholder="Passwort" name="password" id="password"/>
                     </div>
 
 
@@ -196,12 +173,18 @@ if (isset($_POST['btn-login'])) {
 
         </div>
 
+
+
+
         <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
         <script src="./slick/slick.js" type="text/javascript" charset="utf-8"></script>
         <script src="vendor/tether/tether.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 
         <!-- Plugin JavaScript -->
+        <script type="text/javascript" src="./js/validation.min.js"></script>
+        <script type="text/javascript" src="./js/login.js"></script>
+
         <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
         <script src="vendor/scrollreveal/scrollreveal.min.js"></script>
         <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
