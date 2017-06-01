@@ -10,11 +10,6 @@
 
 		$mid = intval($_POST['memeID']);
 
-		// $stmt_select = $DB_con->prepare('SELECT filename FROM memes WHERE memeid =:mid');
-		// $stmt_select->execute(array(':mid'=>$mid));
-		// $imgRow=$stmt_select->fetch(PDO::FETCH_ASSOC);
-		// unlink("images/".$imgRow['filename']);
-
 		$query = "SELECT filename FROM memes WHERE memeid=:mid";
 		$stmt_select = $DBcon->prepare( $query );
 		$stmt_select->execute(array(':mid'=>$mid));

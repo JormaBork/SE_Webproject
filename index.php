@@ -1,6 +1,19 @@
 <?php
 session_start();
+include_once 'dbconn.php';
+$results = 0;
 
+
+if (isset($_SESSION['userSession'])) {
+
+$userID = $_SESSION['userSession'];
+$query = "SELECT id FROM users WHERE id=$userID";
+$stmt = $DBcon->prepare( $query );
+$stmt->execute();
+$results = $stmt->fetch(PDO::FETCH_ASSOC);
+$results = count($results);
+
+}
 
 ?>
 
@@ -80,12 +93,18 @@ session_start();
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#login">Login</a>
+                    <?php if ($results > 0): ?>
+                        <a class="nav-link" href="logout.php?logout">Logout</a>
+                    <?php endif; ?>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#contact">Contact</a>
+                    <?php if ($results == 0): ?>
+                    <a class="nav-link" href="#login">Login</a>
+                    <?php endif; ?>
                 </li>
+
+
             </ul>
         </div>
     </div>
@@ -120,11 +139,12 @@ session_start();
 
 <!-- Beispiel Memes -->
 <section class="regular slider" id="bspmemes">
-
+<!-- Slider Images erscheinen hier  -->
 
 </section>
 
 <!-- Der Login Bereich -->
+<?php if ($results == 0): ?>
 <section id="login">
     <div class="container">
 
@@ -172,27 +192,30 @@ session_start();
             </div>
 
         </div>
+  </div>
+</section>
+<?php endif; ?>
 
 
-
-
+        <!-- JavaScript fuer den Jquery den Slider sowie Tether und Bootrapap JS fuer die Funktionen des Bootsrap Modals  -->
         <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
         <script src="./slick/slick.js" type="text/javascript" charset="utf-8"></script>
         <script src="vendor/tether/tether.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 
-        <!-- Plugin JavaScript -->
+        <!-- JavaScript fuer den Login und die Validierung der Login Daten -->
         <script type="text/javascript" src="./js/validation.min.js"></script>
         <script type="text/javascript" src="./js/login.js"></script>
+
 
         <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
         <script src="vendor/scrollreveal/scrollreveal.min.js"></script>
         <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
 
-        <!-- Custom scripts for this template -->
+        <!-- Zusaetzliches JavaScript fuer das Bootrap Template  -->
         <script src="js/creative.min.js"></script>
 
-
+        <!-- Einstellungen von Slick Slider  -->
         <script type="text/javascript">
             $(document).on('ready', function () {
                 $(".regular").slick({

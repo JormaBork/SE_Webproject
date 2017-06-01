@@ -3,7 +3,6 @@
 header('Content-type: application/json; charset=UTF-8');
 
 
-
 require_once 'dbconn.php';
 
 //Arrays
@@ -11,7 +10,7 @@ $dbArray = array();
 $dirFilesArray = array();
 
 
-//fetch table rows from mysql db
+
 $query = "SELECT filename FROM memes";
 $stmt = $DBcon->prepare( $query );
 $stmt->execute();
