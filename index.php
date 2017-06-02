@@ -43,6 +43,8 @@ $results = count($results);
     <link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="./slick/slick.css">
     <link rel="stylesheet" type="text/css" href="./slick/slick-theme.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/6.6.2/sweetalert2.min.css" type="text/css" />
+
 
     <!-- Custom styles for this template -->
     <link href="css/creative.css" rel="stylesheet">
@@ -249,6 +251,8 @@ $results = count($results);
         <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
         <script src="vendor/scrollreveal/scrollreveal.min.js"></script>
         <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/sweetalert2/6.6.2/sweetalert2.min.js"></script>
+
 
         <!-- Zusaetzliches JavaScript fuer das Bootrap Template  -->
         <script src="js/creative.min.js"></script>

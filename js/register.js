@@ -71,7 +71,18 @@ $('document').ready(function()
                 {
 
                     $("#btn-submit").html('registriere...');
-                    setTimeout('$(".form-signin").fadeOut(500, function(){ $(".signin-form").load("erfolg.php"); }); ',5000);
+                    setTimeout('$("#register-form, #registerheadline").fadeOut(1000);', 2500);
+                    setTimeout('$("#login-form, #loginheadline").fadeIn(1000);', 4500);
+
+
+                    setTimeout(function(){
+                       swal({
+                              title: "Registrierung erfolgreich!",
+                              text: "Du kannst dich jetzt einloggen."
+                            });
+                    }, 4000);
+
+
 
                 }
                 else{
