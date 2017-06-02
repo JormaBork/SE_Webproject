@@ -3,38 +3,46 @@ session_start();
 if (isset($_SESSION['userSession'])!="") {
 	header("Location: meme.php");
 }
-require_once 'database.php';
+require_once 'dbconn.php';
 
 if(isset($_POST['btn-signup'])) {
 
 
-	$email = strip_tags($_POST['email']);
-	$name = strip_tags($_POST['name']);
-	$pass = strip_tags($_POST['password']);
+	$email = trim($_POST['email']);
+	$name = trim($_POST['name']);
+	$pass = trim($_POST['password']);
+	$hashed_password = md5($pass);
+
+	
+	// Pruefe ob Email existiert
+	$stmt_select = $DBcon->prepare("SELECT email FROM users WHERE email=:email");
+	$stmt_select->execute(array(":email"=>$email));
+	$row = $stmt_select->fetch(PDO::FETCH_ASSOC);
+	$count = $stmt_select->rowCount();
 
 
-	$uemail = $DBcon->real_escape_string($email);
-	$uname = $DBcon->real_escape_string($name);
-	$upass = $DBcon->real_escape_string($pass);
-
-	$hashed_password = password_hash($pass, PASSWORD_DEFAULT);
-
-	$check_email = $DBcon->query("SELECT email FROM users WHERE email='$email'");
-	$count=$check_email->num_rows;
 
 	if ($count==0) {
 
-		$query = "INSERT INTO users(name,email,password) VALUES('$name','$email','$hashed_password')";
 
-		if ($DBcon->query($query)) {
+		try
+		{
+			$query= "INSERT INTO users (name, email, password) VALUES(?, ?, ?)";
+			$stmt_insert = $DBcon->prepare( $query );
+			$stmt_insert->execute(array($name, $email, $hashed_password));
 			$msg = "<div class='alert alert-success'>
 						<span class='glyphicon glyphicon-info-sign'></span> &nbsp; Du hast dich erfolgreich registriert !
 					</div>";
-		}else {
+
+
+
+		}
+		catch(PDOException $e){
 			$msg = "<div class='alert alert-danger'>
 						<span class='glyphicon glyphicon-info-sign'></span> &nbsp; Hoppla...da gab es wohl einen Fehler !
 					</div>";
 		}
+
 
 	} else {
 
@@ -45,7 +53,6 @@ if(isset($_POST['btn-signup'])) {
 
 	}
 
-	$DBcon->close();
 }
 ?>
 
@@ -89,7 +96,7 @@ if(isset($_POST['btn-signup'])) {
 
 		<div class="form-group">
         <input type="name" class="form-control" placeholder="Name" name="name" required  />
-        
+
         </div>
 
         <div class="form-group">
