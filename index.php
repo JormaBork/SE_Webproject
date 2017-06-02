@@ -96,6 +96,12 @@ $results = count($results);
 
                 <li class="nav-item">
                     <?php if ($results > 0): ?>
+                        <a class="nav-link" href="meme.php">Generator</a>
+                    <?php endif; ?>
+                </li>
+
+                <li class="nav-item">
+                    <?php if ($results > 0): ?>
                         <a class="nav-link" href="logout.php?logout">Logout</a>
                     <?php endif; ?>
                 </li>
