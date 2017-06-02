@@ -150,21 +150,21 @@ $results = count($results);
 
         <div class="row">
             <div class="col-lg-12 text-center">
-                <h2 class="section-heading">Login</h2>
-                <hr class="primary">
+              <h2 class="section-heading" id="loginheadline">Login</h2>
+              <h2 class="section-heading" id="registerheadline" style="display: none;">Registrierung</h2>                <hr class="primary">
             </div>
         </div>
         <div class="signin-form">
 
             <div class="container">
-
+              <div id="error">
+              <!-- error will be shown here ! -->
+              </div>
 
                 <form class="form-signin" method="post" id="login-form">
 
 
-                  <div id="error">
-                  <!-- error will be shown here ! -->
-                  </div>
+
 
                     <div class="form-group">
                         <input type="email" class="form-control" placeholder="Email Addresse" name="email" id="email"/>
@@ -181,13 +181,49 @@ $results = count($results);
                             <span class="glyphicon glyphicon-log-in"></span> &nbsp; Los gehts
                         </button>
 
-                        <a href="register.php" class="btn btn-default" style="float:right;">oder registriere dich
+                        <a href="#" class="btn btn-default" style="float:right;" id="register-form-link">oder registriere dich
                             hier</a>
 
                     </div>
 
 
                 </form>
+                <!-- Registrierung -->
+                <form class="form-signin" method="post" id="register-form" style="display: none;">
+
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Name" name="user_name" id="user_name" />
+                    </div>
+
+                    <div class="form-group">
+                        <input type="email" class="form-control" placeholder="Email Addresse" name="user_email" id="user_email" />
+                        <span id="check-e"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="password" class="form-control" placeholder="Passwort" name="user_password" id="user_password" />
+                    </div>
+
+                    <div class="form-group">
+                        <input type="password" class="form-control" placeholder="Wiederhole dein Passwort" name="re_password" id="re_password" />
+                    </div>
+
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-default" name="btn-save" id="btn-submit">
+                            <span class="glyphicon glyphicon-log-in"></span> &nbsp; Erstelle den Account
+                        </button>
+                        <a href="#" class="btn btn-default" style="float:right;" id="login-form-link">Oder logge dich hier ein</a>
+
+                    </div>
+
+                </form>
+
+
+
+
+
 
             </div>
 
@@ -206,6 +242,8 @@ $results = count($results);
         <!-- JavaScript fuer den Login und die Validierung der Login Daten -->
         <script type="text/javascript" src="./js/validation.min.js"></script>
         <script type="text/javascript" src="./js/login.js"></script>
+        <script type="text/javascript" src="./js/register.js"></script>
+
 
 
         <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
@@ -301,6 +339,31 @@ $results = count($results);
 
 
         </script>
+
+        <script>
+        $(function() {
+
+          $('#login-form-link').click(function(e) {
+              $("#login-form").delay(100).fadeIn(100);
+              $("#loginheadline").fadeIn(100);
+              $("#register-form").fadeOut(100);
+              $("#registerheadline").fadeOut(100);
+              $('#register-form-link').removeClass('active');
+              $(this).addClass('active');
+              e.preventDefault();
+           });
+          $('#register-form-link').click(function(e) {
+              $("#register-form").delay(100).fadeIn(100);
+              $("#registerheadline").fadeIn(100);
+              $("#login-form").fadeOut(100);
+              $("#loginheadline").fadeOut(100);
+              $('#login-form-link').removeClass('active');
+              $(this).addClass('active');
+              e.preventDefault();
+           });
+
+          });
+      </script>
 
 
 </body>
