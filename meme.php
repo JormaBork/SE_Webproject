@@ -146,12 +146,15 @@ $results = count($results);
 
 <!-- Einbettung von jquery-easing, scrollreveal und magnific-popup sind teilweise fuer die Funktion des
 "Creative Bootstrap Templates" notwendig. Zudem ermoeglichen sie nette features, wie z.B. das SmoothScrolling (scrollreveal)
-Die SweetAlert2.min.js dient dazu, optisch anpsrechende Meldungen anzuzeigen.
+Die SweetAlert2.min.js dient dazu, optisch anpsrechende Meldungen anzuzeigen. Da Chrome und Firefox standardgemaeß keinen
+saveAs Dialog fuer Canvas unterstuetzen wird die FileSaver.js verwendet, um das automatische Downloaden der Memes zu ermoeglichen.
   -->
 <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 <script src="vendor/scrollreveal/scrollreveal.min.js"></script>
 <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
 <script src="https://cdn.jsdelivr.net/sweetalert2/6.6.2/sweetalert2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.3/FileSaver.min.js"></script>
+
 
 <!-- Zusaetzliches JavaScript fuer das Bootrap 'Creative' Template  -->
 <script src="js/creative.min.js"></script>
@@ -219,7 +222,7 @@ DER MEMEGENERATOR
 
     // Funktion fuer das Zeichnen des Memes
     function redrawMeme(image, topLine, bottomLine) {
-        // Get Canvas2DContext
+        // Hole die Canvas2DContext
         var canvas = document.querySelector('canvas');
         var ctx = canvas.getContext("2d");
 
@@ -266,14 +269,13 @@ DER MEMEGENERATOR
         ctx.strokeText(message, canvas.width / 2, verticalPosition());
     }
 
-    // Funktion fuer das Downlaoden des Memes
-    function downloadCanvas(link, canvasId, filename) {
-        link.href = document.getElementById(canvasId).toDataURL();
-        link.download = filename;
-    }
-    document.getElementById('download').addEventListener('click', function () {
-        downloadCanvas(this, 'canvas', 'meme.png');
-    }, false);
+    // Funktion fuer das Downlaoden des Memes. Sie verwendet FileSaver.js
+      document.getElementById('download').addEventListener('click', function () {
+        var canvas = document.getElementById('canvas');
+        canvas.toBlob(function(blob){
+          saveAs(blob, "meme.png");
+        });
+    });
 
     // Funktion fuer das Festlegen der Canvas-Groesse und das Handhaben der ausgewaehlten Bild-Datei
     function handleFileSelect(evt) {
