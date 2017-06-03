@@ -2,10 +2,12 @@
 session_start();
 include_once 'dbconn.php';
 
+// Falls keine Session besteht wird die index.php geladen.
 if (!isset($_SESSION['userSession'])) {
     header("Location: index.php");
 }
 
+// Ueberprueft, ob der Nutzer eingeloggt ist.
 $userID = $_SESSION['userSession'];
 $query = "SELECT id FROM users WHERE id=$userID";
 $stmt = $DBcon->prepare($query);
@@ -22,10 +24,10 @@ $results = count($results);
     <title>ULTIMATE VONG Meme Generator</title>
 
 
-    <!-- Bootstrap core CSS -->
+    <!-- Bootstrap CSS -->
     <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
 
-    <!-- Custom fonts for this template -->
+    <!-- Individuelle Schriftarten fuer dieses Template und fuer den MemeGenerator-->
     <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
           rel='stylesheet' type='text/css'>
@@ -34,11 +36,11 @@ $results = count($results);
     <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
 
 
-    <!-- Plugin CSS -->
+    <!-- Zusaetzliche CSS fuer bootstrap und die SweetAltert Notifications -->
     <link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/6.6.2/sweetalert2.min.css" type="text/css"/>
 
-    <!-- Custom styles for this template -->
+    <!-- Angepassetes CSS fuer das grundsätzliche Bootrap Design-Schema  -->
     <link href="css/creative.css" rel="stylesheet">
 
 
@@ -50,6 +52,7 @@ $results = count($results);
 
 <body>
 <body id="page-top">
+
 <!-- Navigation -->
 <nav class="navbar fixed-top navbar-toggleable-md navbar-inverse bg-inverse" id="mainNav">
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
@@ -129,42 +132,68 @@ $results = count($results);
             <h3>Verwalte deine Memes</h3>
         </div>
 
-        <div id="load-memes"></div> <!-- products will be load here -->
+        <div id="load-memes"></div>
+        <!-- Die Tabelle wird hier hereingeladen -->
 
     </div>
 </section>
 
-<!-- Bootstrap core JavaScript -->
+<!-- JavaScript wie Jquery, Tether und Bootrapap, die fuer die Funktionen des Bootsrap Modals   -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="vendor/tether/tether.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 
 
-<!-- Plugin JavaScript -->
+<!-- Einbettung von jquery-easing, scrollreveal und magnific-popup sind teilweise fuer die Funktion des
+"Creative Bootstrap Templates" notwendig. Zudem ermoeglichen sie nette features, wie z.B. das SmoothScrolling (scrollreveal)
+Die SweetAlert2.min.js dient dazu, optisch anpsrechende Meldungen anzuzeigen.
+  -->
 <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 <script src="vendor/scrollreveal/scrollreveal.min.js"></script>
 <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
 <script src="https://cdn.jsdelivr.net/sweetalert2/6.6.2/sweetalert2.min.js"></script>
 
-<!-- Custom scripts for this template -->
+<!-- Zusaetzliches JavaScript fuer das Bootrap 'Creative' Template  -->
 <script src="js/creative.min.js"></script>
 
+
+<!--
+DER MEMEGENERATOR
+=================
+-->
 <script>
 
-
-    // UPLOAD DES MEMES
+    /*
+    Upload der Memes
+    ===================
+    */
     $(document).ready(function () {
 
+        /*
+        Mit Click auf den Upload-Button wird die Funktion gestartet
+        das aktuelle Canvas Element eingelesen. Mit der Funktion
+        "toDataURL" wird eine Methodothe ausgefuehrt, die eine dataURI zurueck
+        gibt, welche eine Representation des Bildes beinhaltet (*.png)
+
+        Zusaetzlich dazu wird der Variable "memetext" die Überschrift und der Untertitel
+        des Memes eingelesen.
+        */
         $("#uploadBtn").click(function () {
             var canvas = document.getElementById('canvas');
             var dataURL = canvas.toDataURL();
             var memetext = $("#topLineText").val() + " " + $("#bottomLineText").val();
 
+            // Die Elemente dataURL und memetext werden als Array an die uploadMeme.php gesendet
             $.ajax({
                 type: "POST",
                 url: "uploadMeme.php",
                 data: {img: dataURL, memetext: memetext}
 
+            /*
+            Wenn dies abgeschlossen ist, wird eine Meldung (msg) mit SweetAltert ausgegeben,
+            welche in der uploadMeme.php als echo ausgegeben worden ist.
+            Ferner wird die Funktion readMemes ausgefuehrt um die Taballe neu einzulesen.
+            */
             }).done(function (msg) {
                 swal(msg);
                 readMemes();
@@ -174,7 +203,7 @@ $results = count($results);
 
     });
 
-
+    // Funktion fuer das Lesen der Ueberschrift und des Untertitels
     function textChangeListener(evt) {
         var id = evt.target.id;
         var text = evt.target.value;
@@ -188,6 +217,7 @@ $results = count($results);
         redrawMeme(window.imageSrc, window.topLineText, window.bottomLineText);
     }
 
+    // Funktion fuer das Zeichnen des Memes
     function redrawMeme(image, topLine, bottomLine) {
         // Get Canvas2DContext
         var canvas = document.querySelector('canvas');
@@ -209,7 +239,6 @@ $results = count($results);
         }
         ctx.drawImage(image, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, destWidth, destHeight);
 
-        // ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
         if (topLine) {
             drawMessage(canvas, ctx, 'top', topLine);
         }
@@ -217,7 +246,7 @@ $results = count($results);
             drawMessage(canvas, ctx, 'bottom', bottomLine);
         }
     }
-
+    // Festlegen der Schriftgroesse und Position der Buchstaben auf dem Canvas
     function drawMessage(canvas, ctx, position, message) {
         var fontSize = 46;
         var padding = 10;
@@ -237,7 +266,7 @@ $results = count($results);
         ctx.strokeText(message, canvas.width / 2, verticalPosition());
     }
 
-
+    // Funktion fuer das Downlaoden des Memes
     function downloadCanvas(link, canvasId, filename) {
         link.href = document.getElementById(canvasId).toDataURL();
         link.download = filename;
@@ -246,7 +275,7 @@ $results = count($results);
         downloadCanvas(this, 'canvas', 'meme.png');
     }, false);
 
-
+    // Funktion fuer das Festlegen der Canvas-Groesse und das Handhaben der ausgewaehlten Bild-Datei
     function handleFileSelect(evt) {
         var canvasWidth = 500;
         var canvasHeight = 500;
@@ -257,7 +286,7 @@ $results = count($results);
         reader.onload = function (fileObject) {
             var data = fileObject.target.result;
 
-            // Create an image object
+            // Definiert/Erstellt ein neues "Image-Objekt"
             var image = new Image();
             image.onload = function () {
 
@@ -265,32 +294,49 @@ $results = count($results);
                 redrawMeme(window.imageSrc, null, null);
             };
 
-            // Set image data to background image.
+            // Legt fest, dass sich das ausgewaehlte Bild auf dem Hintergrund befinden wird.
             image.src = data;
             console.log(fileObject.target.result);
         };
         reader.readAsDataURL(file);
     }
 
+    // Standardgemaeß liegt noch kein Text in der Ueberschrift oder im Untertitel
     window.topLineText = "";
     window.bottomLineText = "";
+    // Der eingegebene Text wird in der Variablen input1 und input2 gespeichert.
     var input1 = document.getElementById('topLineText');
     var input2 = document.getElementById('bottomLineText');
+
+    // Das oninput Ereignis tritt auf, wenn der Textinhalt eines Elements sich durch Benutzereingabe aendert.
     input1.oninput = textChangeListener;
     input2.oninput = textChangeListener;
+
+    // Eventlistner fuer die ausgewaehlten Datei
     document.getElementById('file').addEventListener('change', handleFileSelect, false);
-    // document.querySelector('#uploadBtn').addEventListener('click', uploadFile, false);
 
 
 </script>
-<script>
 
-    // TABELLE FUER DIE VERWALTUNG DER MEMES
+
+<script>
+    /*
+    TABELLE FUER DIE VERWALTUNG DER MEMES
+    =====================================
+    Laedt die Tabelle fuer die Verwaltung der Memes und reagiert auf Aenderungen,
+    wie z.B. dem Loeschen eines Memes.
+    */
     $(document).ready(function () {
 
+        // Wenn das Dokument laed, wird die Tabelle geladen
         readMemes();
-        /* it will load products when document loads */
 
+        /*
+        Wenn auf den Loeschen-Button geclickt wird, dann
+        die ID des Memes in der Variable memeID gespeichert
+        und der Funktion SwalDelete uebergeben.
+
+        */
         $(document).on('click', '#delete_meme', function (e) {
 
             var memeID = $(this).data('id');
@@ -300,6 +346,13 @@ $results = count($results);
 
     });
 
+    /*
+    FUNKTION FUER DIE LOESCHUNG DES MEMES
+    ======================================
+    Das Ausfuehren dieser Funktion triggert zunaechst
+    einen SweetAltert-Dialog, bei dem der Nutzer den Vorgang
+    ausfuehren oder abbrechen kann.
+    */
     function SwalDelete(memeID) {
 
         swal({
@@ -313,6 +366,11 @@ $results = count($results);
             confirmButtonText: 'Ja, weg damit!',
             showLoaderOnConfirm: true,
 
+            /*
+            Mit der Nutzerbestaetigung der Loeschvorgangs
+            wird die memeID als JSON an die delete.php
+            uebermittelt.
+            */
             preConfirm: function () {
                 return new Promise(function (resolve) {
                     $.ajax({
@@ -321,6 +379,11 @@ $results = count($results);
                         data: 'memeID=' + memeID,
                         dataType: 'json'
                     })
+
+                        /*
+                        Ausgabe einer Erfolgs-/Misserfolgsmeldung als SweetAltert-Message
+                        und Neueinlesen der Tabelle.
+                        */
                         .done(function (response) {
                             swal('Gelöscht!', response.message, response.status);
                             readMemes();
@@ -337,6 +400,7 @@ $results = count($results);
 
     }
 
+    // Funktion zum Einlesen der Tabelle
     function readMemes() {
         $('#load-memes').load('readTable.php');
     }

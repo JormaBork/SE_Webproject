@@ -285,7 +285,7 @@ Die SweetAlert2.min.js dient dazu, optisch anpsrechende Meldungen anzuzeigen.
 <script src="https://cdn.jsdelivr.net/sweetalert2/6.6.2/sweetalert2.min.js"></script>
 
 
-<!-- Zusaetzliches JavaScript fuer das Bootrap Template  -->
+<!-- Zusaetzliches JavaScript fuer das Bootrap 'Creative' Template  -->
 <script src="js/creative.min.js"></script>
 
 <!--
