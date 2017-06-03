@@ -36,7 +36,8 @@ Ferner liefert die Datenbankabfrage die notwendigen Informationen fuer den Inhal
                     <td><?php echo $memetext; ?></td>
                     <td>
                         <a class="btn btn-sm btn-danger" id="delete_meme" data-id="<?php echo $memeid; ?>"
-                           href="javascript:void(0)"><i class="glyphicon glyphicon-trash"></i></a>
+                           href="javascript:void(0)">
+                           <i class="fa fa-trash fa-2x"></i></a>
                     </td>
                 </tr>
                 <?php

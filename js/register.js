@@ -60,7 +60,7 @@ $('document').ready(function () {
             data: data,
             beforeSend: function () {
                 $("#error").fadeOut();
-                $("#btn-submit").html('<span class="glyphicon glyphicon-transfer"></span> &nbsp; sende ...');
+                $("#btn-submit").html('<span class="fa fa-transfer"></span> &nbsp; sende ...');
             },
             success: function (data) {
                 if (data == 1) {
@@ -68,9 +68,9 @@ $('document').ready(function () {
                     $("#error").fadeIn(1000, function () {
 
 
-                        $("#error").html('<div class="alert alert-danger"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; E-Mail ist bereits vergeben!</div>');
+                        $("#error").html('<div class="alert alert-danger"> <span class="fa fa-info-sign"></span> &nbsp; E-Mail ist bereits vergeben!</div>');
 
-                        $("#btn-submit").html('<span class="glyphicon glyphicon-log-in"></span> &nbsp; Erstelle den Account');
+                        $("#btn-submit").html('<span class="fa fa-log-in"></span> &nbsp; Erstelle den Account');
 
                     });
 
@@ -103,9 +103,9 @@ $('document').ready(function () {
 
                     $("#error").fadeIn(1000, function () {
 
-                        $("#error").html('<div class="alert alert-danger"><span class="glyphicon glyphicon-info-sign"></span> &nbsp; ' + data + ' !</div>');
+                        $("#error").html('<div class="alert alert-danger"><span class="fa fa-info-sign"></span> &nbsp; ' + data + ' !</div>');
 
-                        $("#btn-submit").html('<span class="glyphicon glyphicon-log-in"></span> &nbsp; Erstelle den Account');
+                        $("#btn-submit").html('<span class="fa fa-log-in"></span> &nbsp; Erstelle den Account');
 
                     });
 
@@ -115,6 +115,6 @@ $('document').ready(function () {
         return false;
     }
 
-  
+
 
 });

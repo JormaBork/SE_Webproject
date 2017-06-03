@@ -41,6 +41,8 @@ if (isset($_SESSION['userSession'])) {
           rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic'
           rel='stylesheet' type='text/css'>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
 
     <!-- Zusaetzliche CSS fuer bootstrap, den SlickSlider und die SweetAltert Notifications -->
     <link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
@@ -204,7 +206,7 @@ Dieser wird nur angezeigt, wenn der Nutzer noch nicht eingeloggt ist.
 
                         <div class="form-group">
                             <button type="submit" class="btn btn-default" name="btn-login" id="btn-login">
-                                <span class="glyphicon glyphicon-log-in"></span> &nbsp; Los gehts
+                                <span class="fa fa-log-in"></span> &nbsp; Los gehts
                             </button>
 
                             <a href="#" class="btn btn-default" style="float:right;" id="register-form-link">oder
@@ -243,7 +245,7 @@ Dieser wird nur angezeigt, wenn der Nutzer noch nicht eingeloggt ist.
 
                         <div class="form-group">
                             <button type="submit" class="btn btn-default" name="btn-save" id="btn-submit">
-                                <span class="glyphicon glyphicon-log-in"></span> &nbsp; Erstelle den Account
+                                <span class="fa fa-log-in"></span> &nbsp; Erstelle den Account
                             </button>
                             <a href="#" class="btn btn-default" style="float:right;" id="login-form-link">Oder logge
                                 dich hier ein</a>

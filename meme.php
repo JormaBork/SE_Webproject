@@ -34,6 +34,7 @@ $results = count($results);
     <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic'
           rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
 
     <!-- Zusaetzliche CSS fuer bootstrap und die SweetAltert Notifications -->
@@ -146,8 +147,7 @@ $results = count($results);
 
 <!-- Einbettung von jquery-easing, scrollreveal und magnific-popup sind teilweise fuer die Funktion des
 "Creative Bootstrap Templates" notwendig. Zudem ermoeglichen sie nette features, wie z.B. das SmoothScrolling (scrollreveal)
-Die SweetAlert2.min.js dient dazu, optisch anpsrechende Meldungen anzuzeigen. Da Chrome und Firefox standardgemaeß keinen
-saveAs Dialog fuer Canvas unterstuetzen wird die FileSaver.js verwendet, um das automatische Downloaden der Memes zu ermoeglichen.
+Die SweetAlert2.min.js dient dazu, optisch anpsrechende Meldungen anzuzeigen.
   -->
 <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 <script src="vendor/scrollreveal/scrollreveal.min.js"></script>
@@ -222,7 +222,7 @@ DER MEMEGENERATOR
 
     // Funktion fuer das Zeichnen des Memes
     function redrawMeme(image, topLine, bottomLine) {
-        // Hole die Canvas2DContext
+        // Get Canvas2DContext
         var canvas = document.querySelector('canvas');
         var ctx = canvas.getContext("2d");
 

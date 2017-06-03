@@ -45,7 +45,7 @@ $('document').ready(function () {
             data: data,
             beforeSend: function () {
                 $("#error").fadeOut();
-                $("#btn-login").html('<span class="glyphicon glyphicon-transfer"></span> &nbsp; sende ...');
+                $("#btn-login").html('<span class="fa fa-transfer"></span> &nbsp; sende ...');
             },
 
             /*
@@ -61,8 +61,8 @@ $('document').ready(function () {
                 else {
 
                     $("#error").fadeIn(500, function () {
-                        $("#error").html('<div class="alert alert-danger"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; ' + response + ' !</div>');
-                        $("#btn-login").html('<span class="glyphicon glyphicon-log-in"></span> &nbsp; Los gehts');
+                        $("#error").html('<div class="alert alert-danger"> <span class="fa fa-info-sign"></span> &nbsp; ' + response + ' !</div>');
+                        $("#btn-login").html('<span class="fa fa-log-in"></span> &nbsp; Los gehts');
                     });
                 }
             }
