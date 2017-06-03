@@ -8,7 +8,7 @@ if (!isset($_SESSION['userSession'])) {
 
 $userID = $_SESSION['userSession'];
 $query = "SELECT id FROM users WHERE id=$userID";
-$stmt = $DBcon->prepare( $query );
+$stmt = $DBcon->prepare($query);
 $stmt->execute();
 $results = $stmt->fetch(PDO::FETCH_ASSOC);
 $results = count($results);
@@ -36,11 +36,10 @@ $results = count($results);
 
     <!-- Plugin CSS -->
     <link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/6.6.2/sweetalert2.min.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/6.6.2/sweetalert2.min.css" type="text/css"/>
 
     <!-- Custom styles for this template -->
     <link href="css/creative.css" rel="stylesheet">
-
 
 
     <style>
@@ -63,10 +62,10 @@ $results = count($results);
         <div class="collapse navbar-collapse" id="navbarExample">
             <ul class="navbar-nav ml-auto">
 
-              <li class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link" href="index.php">Hauptseite</a>
 
-              </li>
+                </li>
 
 
                 <li class="nav-item">
@@ -74,7 +73,6 @@ $results = count($results);
                         <a class="nav-link" href="logout.php?logout">Logout</a>
                     <?php endif; ?>
                 </li>
-
 
 
             </ul>
@@ -89,45 +87,46 @@ $results = count($results);
                 <h2 class="section-heading">Erstelle deine eigenen Memes</h2>
 
                 <p class="text">Lade einfach die gewünschte Datei und bearbeite sie.</p>
-                <label class="btn btn-primary btn-file">Datei auswählen <input type="file" id="file" style="display: none"></label>
+                <label class="btn btn-primary btn-file">Datei auswählen <input type="file" id="file"
+                                                                               style="display: none"></label>
             </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12" id="image-container">
-                <canvas width="500" height="500" id="canvas" style="background-color: grey;"></canvas>
-                <div class="col-lg-12">
-                  <div class="form-group row">
-                       <div class="col-xs-5">
-                          <label for="usr">&Uuml;berschrift:</label>
-                          <input type="text" class="form-control" id="topLineText">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12" id="image-container">
+                        <canvas width="500" height="500" id="canvas" style="background-color: grey;"></canvas>
+                        <div class="col-lg-12">
+                            <div class="form-group row">
+                                <div class="col-xs-5">
+                                    <label for="usr">&Uuml;berschrift:</label>
+                                    <input type="text" class="form-control" id="topLineText">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-xs-5">
+                                    <label for="usr">Untertitel:</label>
+                                    <input type="text" class="form-control" id="bottomLineText">
+                                </div>
+
+
+                            </div>
+                            <div class="btn-group-vertical" data-toggle="buttons">
+                                <label class="btn btn-primary" id="uploadBtn">Upload</label>
+                                <a class="btn btn-primary" id="download" role="button">Download</a>
+                            </div>
+
                         </div>
-                  </div>
-                  <div class="form-group row">
-                       <div class="col-xs-5">
-                          <label for="usr">Untertitel:</label>
-                          <input type="text" class="form-control" id="bottomLineText">
-                       </div>
-
-
-                  </div>
-                    <div class="btn-group-vertical" data-toggle="buttons">
-                        <label class="btn btn-primary" id="uploadBtn">Upload</label>
-                        <a class="btn btn-primary" id="download" role="button">Download</a>
                     </div>
 
                 </div>
+
             </div>
-
-        </div>
-
-    </div>
 </section>
 
 <section id="editmeme">
-  <div class="container">
+    <div class="container">
 
         <div class="page-header">
-        <h3>Verwalte deine Memes</h3>
+            <h3>Verwalte deine Memes</h3>
         </div>
 
         <div id="load-memes"></div> <!-- products will be load here -->
@@ -135,7 +134,7 @@ $results = count($results);
     </div>
 </section>
 
-  <!-- Bootstrap core JavaScript -->
+<!-- Bootstrap core JavaScript -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="vendor/tether/tether.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
@@ -159,7 +158,7 @@ $results = count($results);
         $("#uploadBtn").click(function () {
             var canvas = document.getElementById('canvas');
             var dataURL = canvas.toDataURL();
-            var memetext = $("#topLineText").val() +" "+ $("#bottomLineText").val();
+            var memetext = $("#topLineText").val() + " " + $("#bottomLineText").val();
 
             $.ajax({
                 type: "POST",
@@ -171,7 +170,6 @@ $results = count($results);
                 readMemes();
             });
         });
-
 
 
     });
@@ -287,60 +285,61 @@ $results = count($results);
 </script>
 <script>
 
-// TABELLE FUER DIE VERWALTUNG DER MEMES
-$(document).ready(function(){
+    // TABELLE FUER DIE VERWALTUNG DER MEMES
+    $(document).ready(function () {
 
-		readMemes(); /* it will load products when document loads */
+        readMemes();
+        /* it will load products when document loads */
 
-		$(document).on('click', '#delete_meme', function(e){
+        $(document).on('click', '#delete_meme', function (e) {
 
-			var memeID = $(this).data('id');
-			SwalDelete(memeID);
-			e.preventDefault();
-		});
+            var memeID = $(this).data('id');
+            SwalDelete(memeID);
+            e.preventDefault();
+        });
 
-	});
+    });
 
-	function SwalDelete(memeID){
+    function SwalDelete(memeID) {
 
-		swal({
-			title: 'Bist du dir sicher?',
-			text: "Dein Meme wird dadurch dauerhaft gelöscht!",
-			type: 'warning',
-			showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#d33',
-      cancelButtonText: 'Abbrechen',
-			confirmButtonText: 'Ja, weg damit!',
-			showLoaderOnConfirm: true,
+        swal({
+            title: 'Bist du dir sicher?',
+            text: "Dein Meme wird dadurch dauerhaft gelöscht!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Abbrechen',
+            confirmButtonText: 'Ja, weg damit!',
+            showLoaderOnConfirm: true,
 
-			preConfirm: function() {
-			  return new Promise(function(resolve) {
-			     $.ajax({
-			   		url: 'delete.php',
-			    	type: 'POST',
-			       	data: 'memeID='+memeID,
-			       	dataType: 'json'
-			     })
-			     .done(function(response){
-			     	swal('Gelöscht!', response.message, response.status);
-					readMemes();
-			     })
-			     .fail(function(){
-			     	swal('Oops...', 'Da ist was schief gelaufen', 'error');
-			     });
-			  });
-		    },
-			allowOutsideClick: false
-		});
+            preConfirm: function () {
+                return new Promise(function (resolve) {
+                    $.ajax({
+                        url: 'delete.php',
+                        type: 'POST',
+                        data: 'memeID=' + memeID,
+                        dataType: 'json'
+                    })
+                        .done(function (response) {
+                            swal('Gelöscht!', response.message, response.status);
+                            readMemes();
+                        })
+                        .fail(function () {
+                            swal('Oops...', 'Da ist was schief gelaufen', 'error');
+                        });
+                });
+            },
+            allowOutsideClick: false
+        });
 
-    readMemes();
+        readMemes();
 
-	}
+    }
 
-	function readMemes(){
-		$('#load-memes').load('readTable.php');
-	}
+    function readMemes() {
+        $('#load-memes').load('readTable.php');
+    }
 </script>
 
 </body>
