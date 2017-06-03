@@ -1,61 +1,74 @@
 
+/*
+Funktion fuer die Validierung der Login-Eingabe
+===============================================
+Das Laden dieser Funktion erfolgt mit dem Laden der index.php.
+Mit der Methode .validate wird die eingebundene validation.min.js
+aufgerufen. Es lassen sich entprechende Regeln und Nachtichten festlegen,
+die bei einer korrekten oder inkorrekten An- bzw. Eingabe erscheinen.
+ */
+$('document').ready(function () {
 
-$('document').ready(function()
-{
-     /* validation */
-	 $("#login-form").validate({
-      rules:
-	  {
-			password: {
-			required: true,
-			},
-			email: {
-            required: true,
-            email: true
+    $("#login-form").validate({
+        rules: {
+            password: {
+                required: true,
             },
-	   },
-       messages:
-	   {
-            password:{
-                      required: "Bitte gib deinen Password ein!"
-                     },
+            email: {
+                required: true,
+                email: true
+            },
+        },
+        messages: {
+            password: {
+                required: "Bitte gib deinen Password ein!"
+            },
             email: "Bitte gib deine Email-Adresse ein!",
-       },
-	   submitHandler: submitForm
-       });
-	   /* validation */
+        },
+        submitHandler: submitForm
+    });
 
-     /* login submit */
-	   function submitForm()
-	   {
-			var data = $("#login-form").serialize();
 
-			$.ajax({
+    /*
+    Funktion fuer die Uebermittlung der Login-Daten
+    ==============================================
+    Mit dem Click auf den Login-Button (Los gehts) werden die Daten an
+    die login.php uebermittelt.
+     */
+    function submitForm() {
+        var data = $("#login-form").serialize();
 
-			type : 'POST',
-			url  : 'login.php',
-			data : data,
-			beforeSend: function()
-			{
-				$("#error").fadeOut();
-				$("#btn-login").html('<span class="glyphicon glyphicon-transfer"></span> &nbsp; sending ...');
-			},
-			success :  function(response)
-			   {
-					if(response=="wunderbar"){
+        $.ajax({
 
-						window.location.href = "meme.php";
-					}
-					else{
+            type: 'POST',
+            url: 'login.php',
+            data: data,
+            beforeSend: function () {
+                $("#error").fadeOut();
+                $("#btn-login").html('<span class="glyphicon glyphicon-transfer"></span> &nbsp; sende ...');
+            },
 
-						$("#error").fadeIn(500, function(){
-				$("#error").html('<div class="alert alert-danger"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; '+response+' !</div>');
-											$("#btn-login").html('<span class="glyphicon glyphicon-log-in"></span> &nbsp; Log In');
-									});
-					}
-			  }
-			});
-				return false;
-		}
-	   /* login submit */
+            /*
+            Der String des "echo" der login.php wird ausgewertet.  Ist dieser == wunderbar,
+            so wird der Nutzer auf die meme.php weitergeleitet. In jedem anderen Falle
+            erscheint ein Warnhinweis in der <div id="error"> der index.php
+            */
+            success: function (response) {
+                if (response == "wunderbar") {
+
+                    window.location.href = "meme.php";
+                }
+                else {
+
+                    $("#error").fadeIn(500, function () {
+                        $("#error").html('<div class="alert alert-danger"> <span class="glyphicon glyphicon-info-sign"></span> &nbsp; ' + response + ' !</div>');
+                        $("#btn-login").html('<span class="glyphicon glyphicon-log-in"></span> &nbsp; Los gehts');
+                    });
+                }
+            }
+        });
+        return false;
+    }
+
+
 });

@@ -1,5 +1,5 @@
 <!--
-Die readTable.php liefert das grundliegende Tabellen-Layout
+Die readTable.php liefert das grundliegende Tabellen-Layout.
 Ferner liefert die Datenbankabfrage die notwendigen Informationen fuer den Inhalt der Tabelle
  -->
 
