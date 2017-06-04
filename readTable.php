@@ -18,9 +18,17 @@ Ferner liefert die Datenbankabfrage die notwendigen Informationen fuer den Inhal
 
         <?php
 
-        // Abfrage der Informationen aus der Datenbank
+        /* Abfrage der Informationen aus der Datenbank
+		   ===========================================
+		   Es werden nur die eigenen Memes angezeigt. Deshalb ist es notwendig eine neue
+		   Session zu starten, um die userID auszulesen. Diese wird bei der DB-Abfrage
+		   mit dem Eintrag in der meme-Tabelle abgeglichen. 
+		*/
         require_once 'dbconn.php';
-        $query = "SELECT memeid, filename, memetext FROM memes";
+        session_start();
+        $userID = $_SESSION['userSession'];
+
+        $query = "SELECT * FROM memes WHERE userid=$userID";
         $stmt = $DBcon->prepare($query);
         $stmt->execute();
 
