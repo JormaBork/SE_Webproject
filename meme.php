@@ -376,9 +376,9 @@ DER MEMEGENERATOR
             preConfirm: function () {
                 return new Promise(function (resolve) {
                     $.ajax({
-                        url: 'delete.php',
-                        type: 'POST',
-                        data: 'memeID=' + memeID,
+                        url: 'image.php?memeID='+memeID,
+                        type: 'DELETE',
+                        // data: 'memeID=' + memeID,
                         dataType: 'json'
                     })
 
