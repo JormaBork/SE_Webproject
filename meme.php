@@ -85,6 +85,7 @@ $results = count($results);
 </nav>
 
 <section id="memegen">
+  <div class="ui-widget-content draggable" id="draggable">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -122,20 +123,21 @@ $results = count($results);
                     </div>
 
                 </div>
-
+              </div>
             </div>
 </section>
 
 <section id="editmeme">
-    <div class="container">
+  <div class="ui-widget-content draggable" id="draggable">
+      <div class="container">
 
-        <div class="page-header">
-            <h3>Verwalte deine Memes</h3>
-        </div>
+          <div class="page-header">
+              <h3>Verwalte deine Memes</h3>
+          </div>
 
-        <div id="load-memes"></div>
-        <!-- Die Tabelle wird hier hereingeladen -->
-
+          <div id="load-memes"></div>
+          <!-- Die Tabelle wird hier hereingeladen -->
+      </div>
     </div>
 </section>
 
@@ -154,11 +156,34 @@ Die SweetAlert2.min.js dient dazu, optisch anpsrechende Meldungen anzuzeigen.
 <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
 <script src="https://cdn.jsdelivr.net/sweetalert2/6.6.2/sweetalert2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.3/FileSaver.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 
 <!-- Zusaetzliches JavaScript fuer das Bootrap 'Creative' Template  -->
 <script src="js/creative.min.js"></script>
 
+
+<!-- Positionierbare Elemente  -->
+<script>
+var positions = JSON.parse(localStorage.positions || "{}");
+$(function () {
+  var d = $("[id=draggable]").attr("id", function (i) {
+      return "draggable_" + i
+  })
+  $.each(positions, function (id, pos) {
+      $("#" + id).css(pos)
+  })
+
+  d.draggable({
+      containment: "#containment-wrapper",
+      scroll: false,
+      stop: function (event, ui) {
+          positions[this.id] = ui.position
+          localStorage.positions = JSON.stringify(positions)
+      }
+  });
+});
+  </script>
 
 <!--
 DER MEMEGENERATOR
@@ -378,7 +403,6 @@ DER MEMEGENERATOR
                     $.ajax({
                         url: 'image.php?memeID='+memeID,
                         type: 'DELETE',
-                        // data: 'memeID=' + memeID,
                         dataType: 'json'
                     })
 
