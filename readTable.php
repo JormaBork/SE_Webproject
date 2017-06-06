@@ -8,6 +8,7 @@ Ferner liefert die Datenbankabfrage die notwendigen Informationen fuer den Inhal
     <table class="table table-bordered table-condensed table-hover table-striped" cellspacing="0" width="100%">
         <thead>
         <tr>
+            <th>Datum</th>
             <th>Bild</th>
             <th>Memetext</th>
             <th>Aktion</th>
@@ -18,12 +19,7 @@ Ferner liefert die Datenbankabfrage die notwendigen Informationen fuer den Inhal
 
         <?php
 
-        /* Abfrage der Informationen aus der Datenbank
-		   ===========================================
-		   Es werden nur die eigenen Memes angezeigt. Deshalb ist es notwendig eine neue
-		   Session zu starten, um die userID auszulesen. Diese wird bei der DB-Abfrage
-		   mit dem Eintrag in der meme-Tabelle abgeglichen. 
-		*/
+        // Abfrage der Informationen aus der Datenbank
         require_once 'dbconn.php';
         session_start();
         $userID = $_SESSION['userSession'];
@@ -39,6 +35,7 @@ Ferner liefert die Datenbankabfrage die notwendigen Informationen fuer den Inhal
                 extract($row);
                 ?>
                 <tr>
+                    <td><?php echo $date; ?></td>
                     <td><img src="images/<?php echo $filename; ?>" width="220" height="220" class="rounded float-left">
                     </td>
                     <td><?php echo $memetext; ?></td>

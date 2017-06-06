@@ -22,7 +22,7 @@ $text = $_POST['memetext'];
 */
 if (strpos($img, 'data:image/png;base64') === 0) {
 
-    
+
     $img = str_replace('data:image/png;base64,', '', $img);
     $img = str_replace(' ', '+', $img);
     $data = base64_decode($img);
@@ -48,7 +48,7 @@ if (strpos($img, 'data:image/png;base64') === 0) {
         // Try und Catch Block fuer besseres Error Handling.
         try {
             // Hinterlegt den Dateinamen, den Memetext und die UserID in der Datenbank
-            $query = "INSERT INTO memes (filename, memetext, userid) VALUES(?, ?, ?)";
+            $query = "INSERT INTO memes (filename, memetext, userid, date) VALUES(?, ?, ?, NOW())";
             $stmt = $DBcon->prepare($query);
             $stmt->execute(array($bild, $text, $id));
 

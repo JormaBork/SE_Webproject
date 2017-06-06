@@ -9,20 +9,16 @@ header('Content-type: application/json; charset=UTF-8');
 
 require_once 'dbconn.php';
 
-// Definition des Arrays
-$dbArray = array();
 
 
-$query = "SELECT filename FROM memes";
+$query = "SELECT * FROM memes";
 $stmt = $DBcon->prepare($query);
 $stmt->execute();
 
-while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-    array_push($dbArray, $row['filename']);
-}
 
 
-echo json_encode($dbArray);
+
+echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
 
 
 ?>

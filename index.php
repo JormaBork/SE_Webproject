@@ -374,12 +374,12 @@ dieser fuer den Slider.
             dataType: "json",
             success: function (data) {
 
-                $.each(data, function (i, filename) {
+                $.each(data, function (i, item) {
 
                     $('.container').on('dragstart', 'img', function () {
                         return false;
                     });
-                    $('.regular.slider').slick('slickAdd', "<div><img src=images/" + filename + "></div>");
+                    $('.regular.slider').slick('slickAdd', "<div><img src=images/" + data[i].filename + "></div>");
 
                 });
             }
