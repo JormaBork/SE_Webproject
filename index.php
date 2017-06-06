@@ -44,14 +44,14 @@ if (isset($_SESSION['userSession'])) {
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
 
-    <!-- Zusaetzliche CSS fuer bootstrap, den SlickSlider und die SweetAltert Notifications -->
+    <!-- Zusaetzliche CSS fuer bootstrap, den SlickSlider und die SweetAlert Notifications -->
     <link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="./slick/slick.css">
     <link rel="stylesheet" type="text/css" href="./slick/slick-theme.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/6.6.2/sweetalert2.min.css" type="text/css"/>
 
 
-    <!-- Angepassetes CSS fuer das indiviuelle bzw. grundsätzliche Design-Schema  -->
+    <!-- Angepasstes CSS fuer das indiviuelle bzw. grundsätzliche Design-Schema  -->
     <link href="css/creative.css" rel="stylesheet">
 
     <!--
