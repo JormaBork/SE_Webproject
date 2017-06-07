@@ -370,7 +370,7 @@ dieser fuer den Slider.
     $(function () {
         $.ajax({
             type: "GET",
-            url: "getImage.php",
+            url: "image.php?list",
             dataType: "json",
             success: function (data) {
 
